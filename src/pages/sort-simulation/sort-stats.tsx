@@ -6,9 +6,10 @@ interface SortStatsProps {
   algorithm: SortAlgorithm
   comparisons: number
   swaps: number
+  elapsedTime: number
 }
 
-const SortStats = ({ algorithm, comparisons, swaps }: SortStatsProps) => {
+const SortStats = ({ algorithm, comparisons, swaps, elapsedTime }: SortStatsProps) => {
   const algorithmInfo = SORT_ALGORITHMS.find(a => a.value === algorithm)
 
   return (
@@ -47,6 +48,19 @@ const SortStats = ({ algorithm, comparisons, swaps }: SortStatsProps) => {
           </TooltipTrigger>
           <TooltipContent className="max-w-xs text-sm" sideOffset={10}>
             The number of times the algorithm swaps two elements.
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <div className="rounded-full size-1 bg-neutral-500" />
+      <TooltipProvider delayDuration={100}>
+        <Tooltip>
+          <TooltipTrigger>
+            <div className="text-white text-sm">
+              <span className="font-medium">Time:</span> <span className="font-mono">{elapsedTime.toFixed(3)}s</span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent className="max-w-xs text-sm" sideOffset={10}>
+            The time taken to complete the sorting algorithm.
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

@@ -1,6 +1,6 @@
 import { SORT_ALGORITHMS } from "@/constants"
 import { useSortAlgorithms } from "@/hooks/sort-algorithms/"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import SortChart from "./sort-chart"
 import SortControls from "./sort-controls"
@@ -14,6 +14,7 @@ interface AlgorithmState {
   comparingIndex: number
   comparisons: number
   swaps: number
+  elapsedTime: number
 }
 
 const SortSimulation = () => {
@@ -28,6 +29,7 @@ const SortSimulation = () => {
     comparingIndex: -1,
     comparisons: 0,
     swaps: 0,
+    elapsedTime: 0,
   })
 
   const [algorithms, setAlgorithms] = useState<AlgorithmState[]>([generateAlgorithmState(arrayLength, "bubble")])
@@ -40,16 +42,54 @@ const SortSimulation = () => {
     algorithms: algorithms.map(algorithm => algorithm.algorithm),
   })
 
+  const startTimeRef = useRef<Record<string, number>>({})
+  const finishedAlgorithmsRef = useRef<Set<string>>(new Set())
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null
+
+    if (isSorting.some(sorting => sorting)) {
+      intervalId = setInterval(() => {
+        const currentTime = performance.now()
+        setAlgorithms(prev =>
+          prev.map((algorithm, index) => {
+            if (
+              isSorting[index] &&
+              startTimeRef.current[algorithm.id] &&
+              !finishedAlgorithmsRef.current.has(algorithm.id)
+            ) {
+              return {
+                ...algorithm,
+                elapsedTime: (currentTime - startTimeRef.current[algorithm.id]) / 1000,
+              }
+            }
+            return algorithm
+          }),
+        )
+      }, 100)
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+      }
+    }
+  }, [isSorting])
+
   const resetStats = () => {
-    setAlgorithms(prev => prev.map(algorithm => ({ ...algorithm, comparisons: 0, swaps: 0 })))
+    startTimeRef.current = {}
+    finishedAlgorithmsRef.current.clear()
+    setAlgorithms(prev => prev.map(algorithm => ({ ...algorithm, comparisons: 0, swaps: 0, elapsedTime: 0 })))
   }
 
   const handleStart = async () => {
     resetStats()
-
+    finishedAlgorithmsRef.current.clear()
     setSorting(true)
 
     const promises = algorithms.map(async (algorithm, index) => {
+      startTimeRef.current[algorithm.id] = performance.now()
+
       await sortFunctions[index]({
         numbers: algorithm.numbers,
         setNumbers: (numbers: number[]) =>
@@ -64,13 +104,28 @@ const SortSimulation = () => {
           setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, swaps: a.swaps + 1 } : a))),
         isSortingRef: isSortingRef.current[index],
       })
-      setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, currentIndex: -1, comparingIndex: -1 } : a)))
+
+      finishedAlgorithmsRef.current.add(algorithm.id)
+
+      setAlgorithms(prev =>
+        prev.map((a, i) =>
+          i === index
+            ? {
+                ...a,
+                currentIndex: -1,
+                comparingIndex: -1,
+              }
+            : a,
+        ),
+      )
     })
 
     try {
       await Promise.all(promises)
     } finally {
       setSorting(false)
+      startTimeRef.current = {}
+      finishedAlgorithmsRef.current.clear()
     }
   }
 
@@ -99,6 +154,7 @@ const SortSimulation = () => {
         currentIndex: -1,
         comparisons: 0,
         swaps: 0,
+        elapsedTime: 0,
       })),
     )
   }
@@ -168,6 +224,7 @@ const SortSimulation = () => {
               comparingIndex={algorithm.comparingIndex}
               comparisons={algorithm.comparisons}
               swaps={algorithm.swaps}
+              elapsedTime={algorithm.elapsedTime}
             />
           ))}
         </div>
