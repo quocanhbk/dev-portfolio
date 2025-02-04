@@ -23,4 +23,10 @@ export const SORT_ALGORITHMS = [
     description:
       "A sorting algorithm that works by inserting the current element into the correct position in the sorted array.",
   },
-]
+  {
+    name: "Shell Sort",
+    value: "shell",
+    description:
+      "An optimization of insertion sort that allows the exchange of items that are far apart, reducing the number of swaps required.",
+  },
+] as const

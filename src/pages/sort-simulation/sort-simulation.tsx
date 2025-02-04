@@ -1,4 +1,5 @@
 import { useBubbleSort, useInsertionSort, useMergeSort, useQuickSort } from "@/hooks/sort-algorithms"
+import { useShellSort } from "@/hooks/sort-algorithms/use-shell-sort"
 import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import SortChart from "./sort-chart"
@@ -24,6 +25,7 @@ const SortSimulation = () => {
   const insertionSort = useInsertionSort({ isSortingRef, animationSpeedMs: animationSpeed })
   const mergeSort = useMergeSort({ isSortingRef, animationSpeedMs: animationSpeed })
   const quickSort = useQuickSort({ isSortingRef, animationSpeedMs: animationSpeed })
+  const shellSort = useShellSort({ isSortingRef, animationSpeedMs: animationSpeed })
 
   const handleStart = async () => {
     setIsSorting(true)
@@ -44,6 +46,9 @@ const SortSimulation = () => {
           break
         case "quick":
           await quickSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
+          break
+        case "shell":
+          await shellSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
           break
       }
     } catch (error) {
