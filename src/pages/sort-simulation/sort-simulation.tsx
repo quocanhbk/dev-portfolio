@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { SORT_ALGORITHMS } from "@/constants"
 import { useBubbleSort, useInsertionSort, useMergeSort, useQuickSort } from "@/hooks/sort-algorithms"
 import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
@@ -108,10 +109,11 @@ const SortSimulation = () => {
                   <SelectValue placeholder="Algorithm" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="bubble">Bubble Sort</SelectItem>
-                  <SelectItem value="quick">Quick Sort</SelectItem>
-                  <SelectItem value="merge">Merge Sort</SelectItem>
-                  <SelectItem value="insertion">Insertion Sort</SelectItem>
+                  {SORT_ALGORITHMS.map(algorithm => (
+                    <SelectItem key={algorithm.value} value={algorithm.value}>
+                      {algorithm.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
