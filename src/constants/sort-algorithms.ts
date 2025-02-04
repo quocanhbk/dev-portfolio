@@ -47,4 +47,10 @@ export const SORT_ALGORITHMS = [
     description:
       "A sorting algorithm that only uses flip operations - like flipping pancakes with a spatula - to sort the array.",
   },
+  {
+    name: "Heap Sort",
+    value: "heap",
+    description:
+      "A comparison-based sorting algorithm that uses a binary heap data structure to build a max-heap and repeatedly extract the maximum element.",
+  },
 ] as const

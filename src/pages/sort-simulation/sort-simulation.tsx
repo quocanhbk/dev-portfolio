@@ -1,13 +1,4 @@
-import {
-  useBubbleSort,
-  useCocktailSort,
-  useInsertionSort,
-  useMergeSort,
-  usePancakeSort,
-  useQuickSort,
-  useRadixSort,
-} from "@/hooks/sort-algorithms"
-import { useShellSort } from "@/hooks/sort-algorithms/use-shell-sort"
+import { useSortAlgorithm } from "@/hooks/sort-algorithms/use-sort-algorithm"
 import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import SortChart from "./sort-chart"
@@ -29,14 +20,11 @@ const SortSimulation = () => {
   const [comparisons, setComparisons] = useState(0)
   const [swaps, setSwaps] = useState(0)
 
-  const bubbleSort = useBubbleSort({ isSortingRef, animationSpeedMs: animationSpeed })
-  const insertionSort = useInsertionSort({ isSortingRef, animationSpeedMs: animationSpeed })
-  const mergeSort = useMergeSort({ isSortingRef, animationSpeedMs: animationSpeed })
-  const quickSort = useQuickSort({ isSortingRef, animationSpeedMs: animationSpeed })
-  const shellSort = useShellSort({ isSortingRef, animationSpeedMs: animationSpeed })
-  const cocktailSort = useCocktailSort({ isSortingRef, animationSpeedMs: animationSpeed })
-  const pancakeSort = usePancakeSort({ isSortingRef, animationSpeedMs: animationSpeed })
-  const radixSort = useRadixSort({ isSortingRef, animationSpeedMs: animationSpeed })
+  const sortFunction = useSortAlgorithm({
+    isSortingRef,
+    animationSpeedMs: animationSpeed,
+    algorithm: selectedAlgorithm,
+  })
 
   const handleStart = async () => {
     setIsSorting(true)
@@ -45,32 +33,7 @@ const SortSimulation = () => {
     setSwaps(0)
 
     try {
-      switch (selectedAlgorithm) {
-        case "bubble":
-          await bubbleSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
-          break
-        case "insertion":
-          await insertionSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
-          break
-        case "merge":
-          await mergeSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
-          break
-        case "quick":
-          await quickSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
-          break
-        case "shell":
-          await shellSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
-          break
-        case "cocktail":
-          await cocktailSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
-          break
-        case "pancake":
-          await pancakeSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
-          break
-        case "radix":
-          await radixSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
-          break
-      }
+      await sortFunction({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
     } catch (error) {
       console.error(error)
     } finally {
