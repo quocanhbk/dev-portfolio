@@ -1,3 +1,4 @@
+import { SORT_ALGORITHMS } from "@/constants"
 import { useSortAlgorithms } from "@/hooks/sort-algorithms/"
 import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
@@ -122,11 +123,14 @@ const SortSimulation = () => {
   }
 
   const handleAddAlgorithm = () => {
-    setAlgorithms(prev => [...prev, generateAlgorithmState(arrayLength, "bubble")])
-    setIsSorting(prev => [...prev.map(() => false), false])
-    isSortingRef.current.forEach(ref => {
-      ref.current = false
-    })
+    const newAlgorithm = SORT_ALGORITHMS.find(a => !algorithms.some(algorithm => algorithm.algorithm === a.value))
+    if (newAlgorithm) {
+      setAlgorithms(prev => [...prev, generateAlgorithmState(arrayLength, newAlgorithm.value)])
+      setIsSorting(prev => [...prev.map(() => false), false])
+      isSortingRef.current.forEach(ref => {
+        ref.current = false
+      })
+    }
     isSortingRef.current.push({ current: false })
   }
 

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { SORT_ALGORITHMS } from "@/constants"
+import { Trash2 } from "lucide-react"
 import SortControl from "./sort-control"
 import { type SortAlgorithm } from "./types"
 
@@ -54,12 +55,19 @@ const SortControls = ({
                     ))}
                   </SelectContent>
                 </Select>
-                <Button variant={"outline"} onClick={() => onRemoveAlgorithm(index)}>
-                  Remove
+                <Button
+                  variant={"ghost"}
+                  className="px-2"
+                  onClick={() => onRemoveAlgorithm(index)}
+                  disabled={selectedAlgorithms.length === 1}
+                >
+                  <Trash2 className="w-4 h-4" />
                 </Button>
               </div>
             ))}
-            <Button onClick={onAddAlgorithm}>Add Algorithm</Button>
+            {selectedAlgorithms.length < SORT_ALGORITHMS.length && (
+              <Button onClick={onAddAlgorithm}>Add Algorithm</Button>
+            )}
           </div>
         </SortControl>
         <SortControl label="Size">
