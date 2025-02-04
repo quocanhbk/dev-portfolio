@@ -6,9 +6,10 @@ import SortControls from "./sort-controls"
 import { type SortAlgorithm } from "./types"
 
 const SortSimulation = () => {
-  const [arrayLength, setArrayLength] = useState<number>(50)
+  const [arrayLength, setArrayLength] = useState(50)
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<SortAlgorithm>("bubble")
-  const [numbers, setNumbers] = useState<number[]>(() =>
+  const [animationSpeed, setAnimationSpeed] = useState(10)
+  const [numbers, setNumbers] = useState(() =>
     Array.from({ length: arrayLength }, () => Math.floor(Math.random() * 100) + 1),
   )
   const [isSorting, setIsSorting] = useState(false)
@@ -16,10 +17,10 @@ const SortSimulation = () => {
   const [comparingIndex, setComparingIndex] = useState(-1)
   const isSortingRef = useRef(false)
 
-  const bubbleSort = useBubbleSort({ isSortingRef, animationSpeedMs: 10 })
-  const insertionSort = useInsertionSort({ isSortingRef, animationSpeedMs: 10 })
-  const mergeSort = useMergeSort({ isSortingRef, animationSpeedMs: 10 })
-  const quickSort = useQuickSort({ isSortingRef, animationSpeedMs: 10 })
+  const bubbleSort = useBubbleSort({ isSortingRef, animationSpeedMs: animationSpeed })
+  const insertionSort = useInsertionSort({ isSortingRef, animationSpeedMs: animationSpeed })
+  const mergeSort = useMergeSort({ isSortingRef, animationSpeedMs: animationSpeed })
+  const quickSort = useQuickSort({ isSortingRef, animationSpeedMs: animationSpeed })
 
   const handleStart = async () => {
     setIsSorting(true)
@@ -82,7 +83,9 @@ const SortSimulation = () => {
           arrayLength={arrayLength}
           onArrayLengthChange={handleArrayLengthChange}
           selectedAlgorithm={selectedAlgorithm}
-          onAlgorithmChange={value => setSelectedAlgorithm(value)}
+          onAlgorithmChange={setSelectedAlgorithm}
+          animationSpeed={animationSpeed}
+          onAnimationSpeedChange={setAnimationSpeed}
           isSorting={isSorting}
           onStart={handleStart}
           onStop={handleStop}
