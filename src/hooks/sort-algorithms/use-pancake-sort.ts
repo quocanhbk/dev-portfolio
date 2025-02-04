@@ -19,6 +19,7 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
       right--
       increaseSwaps()
       setNumbers([...arr])
+      await sleep(animationSpeedMs)
     }
   }
 

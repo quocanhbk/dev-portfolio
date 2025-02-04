@@ -36,7 +36,7 @@ const SortControls = ({
   onRemoveAlgorithm,
 }: SortControlsProps) => {
   return (
-    <div className="w-80 bg-slate-800 p-6 flex flex-col">
+    <div className="w-80 bg-slate-800 p-6 flex flex-col overflow-auto">
       <h2 className="text-white text-xl font-bold mb-6">Controls</h2>
       <div className="space-y-12 flex-1">
         <SortControl label="Algorithm">
@@ -89,8 +89,7 @@ const SortControls = ({
           />
         </SortControl>
       </div>
-
-      <div className="space-y-3 flex flex-col">
+      <div className="space-y-3 flex flex-col mt-12">
         <Button onClick={() => (isSorting ? onStop() : onStart())}>{isSorting ? "Stop" : "Start"}</Button>
         <Button onClick={onReset} variant={"outline"}>
           Reset
