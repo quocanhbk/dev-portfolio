@@ -1,38 +1,39 @@
-import { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Slider } from "@/components/ui/slider"
+import { useState } from "react"
+import { Helmet } from "react-helmet-async"
 
-type SortAlgorithm = "bubble" | "quick" | "merge" | "insertion";
+type SortAlgorithm = "bubble" | "quick" | "merge" | "insertion"
 
 const SortSimulation = () => {
-  const [arrayLength, setArrayLength] = useState<number>(50);
-  const [selectedAlgorithm, setSelectedAlgorithm] =
-    useState<SortAlgorithm>("bubble");
-  const [numbers, setNumbers] = useState<number[]>(() =>
-    Array.from(
-      { length: arrayLength },
-      () => Math.floor(Math.random() * 10000) + 1
-    )
-  );
-  const [isSorting, setIsSorting] = useState(false);
+  const [arrayLength, setArrayLength] = useState<number>(50)
 
-  const generateNewArray = () => {
-    setNumbers(
-      Array.from(
-        { length: arrayLength },
-        () => Math.floor(Math.random() * 10000) + 1
-      )
-    );
-  };
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState<SortAlgorithm>("bubble")
+
+  const [numbers, setNumbers] = useState<number[]>(() =>
+    Array.from({ length: arrayLength }, () => Math.floor(Math.random() * 10000) + 1),
+  )
+  const [isSorting, setIsSorting] = useState(false)
+
+  const generateNewArray = (arrayLength: number) => {
+    setNumbers(Array.from({ length: arrayLength }, () => Math.floor(Math.random() * 10000) + 1))
+  }
 
   const handleStart = () => {
-    setIsSorting(true);
+    setIsSorting(true)
     // Sorting implementation will go here
-  };
+  }
 
   const handleReset = () => {
-    setIsSorting(false);
-    generateNewArray();
-  };
+    setIsSorting(false)
+    generateNewArray(arrayLength)
+  }
+
+  const handleArrayLengthChange = (value: number) => {
+    setArrayLength(value)
+    generateNewArray(value)
+  }
 
   return (
     <>
@@ -43,57 +44,41 @@ const SortSimulation = () => {
         <div className="w-80 bg-slate-800 p-6 flex flex-col">
           <h2 className="text-white text-xl font-bold mb-6">Controls</h2>
 
-          <div className="space-y-4 flex-1">
+          <div className="space-y-6 flex-1">
             <div>
-              <label className="block text-white text-sm font-medium mb-2">
-                Array Length: {arrayLength}
-              </label>
-              <input
-                type="range"
-                min="5"
-                max="200"
-                value={arrayLength}
-                onChange={(e) => setArrayLength(Number(e.target.value))}
-                className="w-full"
+              <label className="block text-white text-sm font-medium mb-4">Array Length: {arrayLength}</label>
+              <Slider
+                value={[arrayLength]}
+                onValueChange={value => handleArrayLengthChange(value[0])}
+                min={5}
+                max={200}
                 disabled={isSorting}
               />
             </div>
 
             <div>
-              <label className="block text-white text-sm font-medium mb-2">
-                Algorithm
-              </label>
-              <select
-                value={selectedAlgorithm}
-                onChange={(e) =>
-                  setSelectedAlgorithm(e.target.value as SortAlgorithm)
-                }
-                className="w-full bg-slate-700 text-white p-2 rounded"
-                disabled={isSorting}
-              >
-                <option value="bubble">Bubble Sort</option>
-                <option value="quick">Quick Sort</option>
-                <option value="merge">Merge Sort</option>
-                <option value="insertion">Insertion Sort</option>
-              </select>
+              <label className="block text-white text-sm font-medium mb-4">Algorithm</label>
+              <Select value={selectedAlgorithm} onValueChange={value => setSelectedAlgorithm(value as SortAlgorithm)}>
+                <SelectTrigger className="w-full bg-slate-700">
+                  <SelectValue placeholder="Algorithm" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="bubble">Bubble Sort</SelectItem>
+                  <SelectItem value="quick">Quick Sort</SelectItem>
+                  <SelectItem value="merge">Merge Sort</SelectItem>
+                  <SelectItem value="insertion">Insertion Sort</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          <div className="space-y-3">
-            <button
-              onClick={handleStart}
-              disabled={isSorting}
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+          <div className="space-y-3 flex flex-col">
+            <Button onClick={handleStart} disabled={isSorting}>
               Start
-            </button>
-            <button
-              onClick={handleReset}
-              disabled={isSorting}
-              className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            </Button>
+            <Button onClick={handleReset} disabled={isSorting} variant={"outline"}>
               Reset
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -112,7 +97,7 @@ const SortSimulation = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SortSimulation;
+export default SortSimulation
