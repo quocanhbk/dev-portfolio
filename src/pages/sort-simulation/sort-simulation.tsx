@@ -69,8 +69,6 @@ const SortSimulation = () => {
 
     try {
       await Promise.all(promises)
-    } catch (error) {
-      console.error(error)
     } finally {
       setSorting(false)
     }
@@ -130,8 +128,8 @@ const SortSimulation = () => {
       isSortingRef.current.forEach(ref => {
         ref.current = false
       })
+      isSortingRef.current.push({ current: false })
     }
-    isSortingRef.current.push({ current: false })
   }
 
   const handleRemoveAlgorithm = (index: number) => {
