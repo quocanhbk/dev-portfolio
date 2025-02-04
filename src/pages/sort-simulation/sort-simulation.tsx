@@ -29,16 +29,16 @@ const SortSimulation = () => {
     try {
       switch (selectedAlgorithm) {
         case "bubble":
-          await bubbleSort(numbers, setNumbers, setCurrentIndex, setComparingIndex)
+          await bubbleSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex })
           break
         case "insertion":
-          await insertionSort(numbers, setNumbers, setCurrentIndex, setComparingIndex)
+          await insertionSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex })
           break
         case "merge":
-          await mergeSort(numbers, setNumbers, setCurrentIndex, setComparingIndex)
+          await mergeSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex })
           break
         case "quick":
-          await quickSort(numbers, setNumbers, setCurrentIndex, setComparingIndex)
+          await quickSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex })
           break
       }
     } catch (error) {

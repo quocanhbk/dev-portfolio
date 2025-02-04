@@ -83,7 +83,7 @@ export const useMergeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
   )
 
   const mergeSort: SortFunction = useCallback(
-    async (numbers, setNumbers, setCurrentIndex, setComparingIndex) => {
+    async ({ numbers, setNumbers, setCurrentIndex, setComparingIndex }) => {
       const arr = [...numbers]
       await mergeSortHelper(
         arr,
