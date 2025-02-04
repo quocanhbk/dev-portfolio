@@ -1,12 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { SORT_ALGORITHMS } from "@/constants"
 import { useBubbleSort, useInsertionSort, useMergeSort, useQuickSort } from "@/hooks/sort-algorithms"
 import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
-
-type SortAlgorithm = "bubble" | "quick" | "merge" | "insertion"
+import SortChart from "./sort-chart"
+import SortControls from "./sort-controls"
+import { type SortAlgorithm } from "./types"
 
 const SortSimulation = () => {
   const [arrayLength, setArrayLength] = useState<number>(50)
@@ -75,71 +72,23 @@ const SortSimulation = () => {
     generateNewArray(value)
   }
 
-  const getBarColor = (index: number) => {
-    if (index === currentIndex) return "bg-red-500"
-    if (index === comparingIndex) return "bg-blue-500"
-    return "bg-green-500"
-  }
-
   return (
     <>
       <Helmet>
         <title>Sort Simulation</title>
       </Helmet>
       <div className="w-full h-screen bg-slate-900 flex">
-        <div className="w-80 bg-slate-800 p-6 flex flex-col">
-          <h2 className="text-white text-xl font-bold mb-6">Controls</h2>
-
-          <div className="space-y-6 flex-1">
-            <div>
-              <label className="block text-white text-sm font-medium mb-4">Array Length: {arrayLength}</label>
-              <Slider
-                value={[arrayLength]}
-                onValueChange={value => handleArrayLengthChange(value[0])}
-                min={5}
-                max={200}
-                disabled={isSorting}
-              />
-            </div>
-
-            <div>
-              <label className="block text-white text-sm font-medium mb-4">Algorithm</label>
-              <Select value={selectedAlgorithm} onValueChange={value => setSelectedAlgorithm(value as SortAlgorithm)}>
-                <SelectTrigger className="w-full bg-slate-700">
-                  <SelectValue placeholder="Algorithm" />
-                </SelectTrigger>
-                <SelectContent>
-                  {SORT_ALGORITHMS.map(algorithm => (
-                    <SelectItem key={algorithm.value} value={algorithm.value}>
-                      {algorithm.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-3 flex flex-col">
-            <Button onClick={() => (isSorting ? handleStop() : handleStart())}>{isSorting ? "Stop" : "Start"}</Button>
-            <Button onClick={handleReset} variant={"outline"}>
-              Reset
-            </Button>
-          </div>
-        </div>
-
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
-          <div className="w-full max-w-4xl h-96 flex items-end justify-center gap-[2px]">
-            {numbers.map((num, index) => (
-              <div
-                key={index}
-                className={`flex-1 ${getBarColor(index)}`}
-                style={{
-                  height: `${num}%`,
-                }}
-              />
-            ))}
-          </div>
-        </div>
+        <SortControls
+          arrayLength={arrayLength}
+          onArrayLengthChange={handleArrayLengthChange}
+          selectedAlgorithm={selectedAlgorithm}
+          onAlgorithmChange={value => setSelectedAlgorithm(value)}
+          isSorting={isSorting}
+          onStart={handleStart}
+          onStop={handleStop}
+          onReset={handleReset}
+        />
+        <SortChart numbers={numbers} currentIndex={currentIndex} comparingIndex={comparingIndex} />
       </div>
     </>
   )
