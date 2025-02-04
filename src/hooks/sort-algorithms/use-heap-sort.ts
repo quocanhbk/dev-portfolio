@@ -13,7 +13,7 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
     increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
-    if (!isSortingRef.current) return
+    if (!isSortingRef.current) return false
 
     let largest = i
     const left = 2 * i + 1
@@ -61,6 +61,8 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
         isSortingRef,
       )
     }
+
+    return true
   }
 
   const heapSort: SortFunction = async ({
@@ -77,7 +79,7 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
 
     // Build max heap
     for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-      if (!isSortingRef.current) return
+      if (!isSortingRef.current) return false
       await heapify(
         arr,
         n,
@@ -93,7 +95,8 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
 
     // Extract elements from heap one by one
     for (let i = n - 1; i > 0; i--) {
-      if (!isSortingRef.current) return // Move current root to end
+      if (!isSortingRef.current)
+        return false // Move current root to end
       ;[arr[0], arr[i]] = [arr[i], arr[0]]
       increaseSwaps()
       setNumbers([...arr])
@@ -111,6 +114,8 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
         isSortingRef,
       )
     }
+
+    return true
   }
 
   return heapSort

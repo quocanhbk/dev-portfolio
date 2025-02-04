@@ -18,7 +18,7 @@ export const useShellSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
       // Perform insertion sort for elements at current gap
       for (let i = gap; i < n; i++) {
-        if (!isSortingRef.current) return
+        if (!isSortingRef.current) return false
 
         const temp = arr[i]
         let j = i
@@ -29,7 +29,7 @@ export const useShellSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
 
         // Shift elements until the correct position is found
         while (j >= gap && arr[j - gap] > temp) {
-          if (!isSortingRef.current) return
+          if (!isSortingRef.current) return false
 
           increaseComparisons()
           arr[j] = arr[j - gap]
@@ -48,6 +48,8 @@ export const useShellSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         setNumbers([...arr])
       }
     }
+
+    return true
   }
 
   return shellSort

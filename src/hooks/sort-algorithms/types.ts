@@ -8,7 +8,7 @@ export interface SortFunctionParams {
   isSortingRef: { current: boolean }
 }
 
-export type SortFunction = (params: SortFunctionParams) => Promise<void>
+export type SortFunction = (params: SortFunctionParams) => Promise<boolean>
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 

@@ -13,7 +13,7 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
     let right = k
 
     while (left < right) {
-      if (!isSortingRef.current) return
+      if (!isSortingRef.current) return false
       ;[arr[left], arr[right]] = [arr[right], arr[left]]
       left++
       right--
@@ -21,6 +21,8 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
       setNumbers([...arr])
       await sleep(animationSpeedMs)
     }
+
+    return true
   }
 
   const findMax = (arr: number[], k: number, increaseComparisons: () => void) => {
@@ -46,7 +48,7 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
     const arr = [...numbers]
 
     for (let i = arr.length - 1; i > 0; i--) {
-      if (!isSortingRef.current) return
+      if (!isSortingRef.current) return false
 
       setCurrentIndex(i)
       await sleep(animationSpeedMs)
@@ -66,6 +68,8 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
         await sleep(animationSpeedMs)
       }
     }
+
+    return true
   }
 
   return pancakeSort

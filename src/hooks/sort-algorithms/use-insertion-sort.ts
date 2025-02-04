@@ -22,7 +22,7 @@ export const useInsertionSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: Sort
       await sleep(animationSpeedMs)
 
       while (j >= 0) {
-        if (!isSortingRef.current) return
+        if (!isSortingRef.current) return false
 
         setComparingIndex(j)
         await sleep(animationSpeedMs)
@@ -44,6 +44,8 @@ export const useInsertionSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: Sort
         setNumbers([...arr])
       }
     }
+
+    return true
   }
 
   return insertionSort

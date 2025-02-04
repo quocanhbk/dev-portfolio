@@ -19,7 +19,7 @@ export const useBubbleSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHoo
 
     for (let i = 0; i < n - 1; i++) {
       for (let j = 0; j < n - i - 1; j++) {
-        if (!isSortingRef.current) return
+        if (!isSortingRef.current) return false
 
         setCurrentIndex(j)
         setComparingIndex(j + 1)
@@ -33,6 +33,8 @@ export const useBubbleSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHoo
         }
       }
     }
+
+    return true
   }
 
   return bubbleSort

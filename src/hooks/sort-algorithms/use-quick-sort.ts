@@ -51,7 +51,9 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
-    if (low < high && isSortingRef.current) {
+    if (low < high) {
+      if (!isSortingRef.current) return false
+
       const pi = await partition(
         arr,
         low,
@@ -63,7 +65,7 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         increaseSwaps,
         isSortingRef,
       )
-      if (pi === -1) return // sorting was cancelled
+      if (pi === -1) return false
       await quickSortHelper(
         arr,
         low,
@@ -87,6 +89,8 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         isSortingRef,
       )
     }
+
+    return true
   }
 
   const quickSort: SortFunction = async ({
@@ -99,7 +103,7 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     isSortingRef,
   }) => {
     const arr = [...numbers]
-    await quickSortHelper(
+    return await quickSortHelper(
       arr,
       0,
       arr.length - 1,

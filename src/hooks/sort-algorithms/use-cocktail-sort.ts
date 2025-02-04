@@ -17,12 +17,12 @@ export const useCocktailSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortH
     let swapped = true
 
     while (swapped) {
-      if (!isSortingRef.current) return
+      if (!isSortingRef.current) return false
       swapped = false
 
       // Forward pass (left to right)
       for (let i = start; i < end; i++) {
-        if (!isSortingRef.current) return
+        if (!isSortingRef.current) return false
         setCurrentIndex(i)
         setComparingIndex(i + 1)
         await sleep(animationSpeedMs)
@@ -43,7 +43,7 @@ export const useCocktailSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortH
 
       // Backward pass (right to left)
       for (let i = end - 1; i >= start; i--) {
-        if (!isSortingRef.current) return
+        if (!isSortingRef.current) return false
         setCurrentIndex(i)
         setComparingIndex(i + 1)
         await sleep(animationSpeedMs)
@@ -59,6 +59,8 @@ export const useCocktailSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortH
 
       start++
     }
+
+    return true
   }
 
   return cocktailSort

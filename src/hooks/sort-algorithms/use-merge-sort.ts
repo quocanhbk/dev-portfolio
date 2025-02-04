@@ -25,7 +25,7 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     let k = left
 
     while (i < n1 && j < n2) {
-      if (!isSortingRef.current) return
+      if (!isSortingRef.current) return false
 
       setCurrentIndex(left + i)
       setComparingIndex(middle + 1 + j)
@@ -51,7 +51,7 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     }
 
     while (i < n1) {
-      if (!isSortingRef.current) return
+      if (!isSortingRef.current) return false
       if (arr[k] !== L[i]) {
         arr[k] = L[i]
         increaseSwaps()
@@ -62,7 +62,7 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     }
 
     while (j < n2) {
-      if (!isSortingRef.current) return
+      if (!isSortingRef.current) return false
       if (arr[k] !== R[j]) {
         arr[k] = R[j]
         increaseSwaps()
@@ -71,6 +71,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
       j++
       k++
     }
+
+    return true
   }
 
   const mergeSortHelper = async (
@@ -84,7 +86,9 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
-    if (left < right && isSortingRef.current) {
+    if (left < right) {
+      if (!isSortingRef.current) return false
+
       const middle = Math.floor((left + right) / 2)
 
       await mergeSortHelper(
@@ -109,7 +113,7 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         increaseSwaps,
         isSortingRef,
       )
-      await merge(
+      return await merge(
         arr,
         left,
         middle,
@@ -122,6 +126,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         isSortingRef,
       )
     }
+
+    return true
   }
 
   const mergeSort: SortFunction = async ({
@@ -134,7 +140,7 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     isSortingRef,
   }) => {
     const arr = [...numbers]
-    await mergeSortHelper(
+    return await mergeSortHelper(
       arr,
       0,
       arr.length - 1,
