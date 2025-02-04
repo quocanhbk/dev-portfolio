@@ -48,8 +48,8 @@ const SortSimulation = () => {
 
     setSorting(true)
 
-    const promises = algorithms.map((algorithm, index) => {
-      return sortFunctions[index]({
+    const promises = algorithms.map(async (algorithm, index) => {
+      await sortFunctions[index]({
         numbers: algorithm.numbers,
         setNumbers: (numbers: number[]) =>
           setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, numbers } : a))),
@@ -63,6 +63,7 @@ const SortSimulation = () => {
           setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, swaps: a.swaps + 1 } : a))),
         isSortingRef: isSortingRef.current[index],
       })
+      setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, currentIndex: -1, comparingIndex: -1 } : a)))
     })
 
     try {
