@@ -1,4 +1,3 @@
-import { useCallback } from "react"
 import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
 
 export interface SortHookProps {
@@ -8,30 +7,34 @@ export interface SortHookProps {
 }
 
 export const useBubbleSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
-  const bubbleSort: SortFunction = useCallback(
-    async ({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps }) => {
-      const arr = [...numbers]
-      const n = arr.length
+  const bubbleSort: SortFunction = async ({
+    numbers,
+    setNumbers,
+    setCurrentIndex,
+    setComparingIndex,
+    setComparisons,
+    setSwaps,
+  }) => {
+    const arr = [...numbers]
+    const n = arr.length
 
-      for (let i = 0; i < n - 1; i++) {
-        for (let j = 0; j < n - i - 1; j++) {
-          if (!isSortingRef.current) return
+    for (let i = 0; i < n - 1; i++) {
+      for (let j = 0; j < n - i - 1; j++) {
+        if (!isSortingRef.current) return
 
-          setCurrentIndex(j)
-          setComparingIndex(j + 1)
-          await sleep(animationSpeedMs)
+        setCurrentIndex(j)
+        setComparingIndex(j + 1)
+        await sleep(animationSpeedMs)
 
-          setComparisons(prev => prev + 1)
-          if (arr[j] > arr[j + 1]) {
-            ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
-            setSwaps(prev => prev + 1)
-            setNumbers([...arr])
-          }
+        setComparisons(prev => prev + 1)
+        if (arr[j] > arr[j + 1]) {
+          ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+          setSwaps(prev => prev + 1)
+          setNumbers([...arr])
         }
       }
-    },
-    [isSortingRef, animationSpeedMs],
-  )
+    }
+  }
 
   return bubbleSort
 }

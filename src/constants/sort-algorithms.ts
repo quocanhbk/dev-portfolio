@@ -29,4 +29,22 @@ export const SORT_ALGORITHMS = [
     description:
       "An optimization of insertion sort that allows the exchange of items that are far apart, reducing the number of swaps required.",
   },
+  {
+    name: "Cocktail Sort",
+    value: "cocktail",
+    description:
+      "A variation of Bubble Sort that sorts in both directions, reducing the number of iterations needed by moving both smallest and largest elements in each pass.",
+  },
+  {
+    name: "Radix Sort",
+    value: "radix",
+    description:
+      "A non-comparative sorting algorithm that sorts numbers digit by digit, from least significant to most significant digit.",
+  },
+  {
+    name: "Pancake Sort",
+    value: "pancake",
+    description:
+      "A sorting algorithm that only uses flip operations - like flipping pancakes with a spatula - to sort the array.",
+  },
 ] as const

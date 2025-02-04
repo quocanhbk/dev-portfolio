@@ -1,4 +1,12 @@
-import { useBubbleSort, useInsertionSort, useMergeSort, useQuickSort } from "@/hooks/sort-algorithms"
+import {
+  useBubbleSort,
+  useCocktailSort,
+  useInsertionSort,
+  useMergeSort,
+  usePancakeSort,
+  useQuickSort,
+  useRadixSort,
+} from "@/hooks/sort-algorithms"
 import { useShellSort } from "@/hooks/sort-algorithms/use-shell-sort"
 import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
@@ -26,6 +34,9 @@ const SortSimulation = () => {
   const mergeSort = useMergeSort({ isSortingRef, animationSpeedMs: animationSpeed })
   const quickSort = useQuickSort({ isSortingRef, animationSpeedMs: animationSpeed })
   const shellSort = useShellSort({ isSortingRef, animationSpeedMs: animationSpeed })
+  const cocktailSort = useCocktailSort({ isSortingRef, animationSpeedMs: animationSpeed })
+  const pancakeSort = usePancakeSort({ isSortingRef, animationSpeedMs: animationSpeed })
+  const radixSort = useRadixSort({ isSortingRef, animationSpeedMs: animationSpeed })
 
   const handleStart = async () => {
     setIsSorting(true)
@@ -49,6 +60,15 @@ const SortSimulation = () => {
           break
         case "shell":
           await shellSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
+          break
+        case "cocktail":
+          await cocktailSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
+          break
+        case "pancake":
+          await pancakeSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
+          break
+        case "radix":
+          await radixSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
           break
       }
     } catch (error) {
