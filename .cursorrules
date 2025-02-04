@@ -1,0 +1,4 @@
+- Use yarn as package manager
+- Use typescript
+- Use react-router-dom for routing
+- Use tailwindcss for styling
