@@ -16,11 +16,11 @@ const SortChart = ({ numbers, currentIndex, comparingIndex, comparisons, swaps }
   return (
     <div className="flex-1 flex flex-col">
       <div className="p-4 flex justify-end space-x-6">
-        <div className="text-white">
+        <div className="text-white text-sm">
           <span className="font-medium">Comparisons:</span>{" "}
           <span className="font-mono">{comparisons.toLocaleString()}</span>
         </div>
-        <div className="text-white">
+        <div className="text-white text-sm">
           <span className="font-medium">Swaps:</span> <span className="font-mono">{swaps.toLocaleString()}</span>
         </div>
       </div>

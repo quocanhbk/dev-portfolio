@@ -7,7 +7,7 @@ export interface SortControlProps {
 const SortControl = ({ label, children, className }: SortControlProps) => {
   return (
     <div className={className}>
-      <label className="block text-white text-sm font-medium mb-4">{label}</label>
+      <label className="block text-white text-sm font-medium mb-2">{label}</label>
       {children}
     </div>
   )
