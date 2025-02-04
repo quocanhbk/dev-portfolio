@@ -1,5 +1,5 @@
-import { SORT_ALGORITHMS } from "@/constants"
 import { memo } from "react"
+import SortStats from "./sort-stats"
 import { SortAlgorithm } from "./types"
 
 interface SortChartProps {
@@ -18,20 +18,9 @@ const SortChart = ({ algorithm, numbers, currentIndex, comparingIndex, compariso
     return "bg-green-500"
   }
 
-  const algorithmInfo = SORT_ALGORITHMS.find(a => a.value === algorithm)
-
   return (
     <div className="flex-1 flex flex-col bg-neutral-900 overflow-hidden">
-      <div className="p-4 flex justify-end items-center space-x-6">
-        <div className="text-white text-sm font-mono font-bold">{algorithmInfo?.name}</div>
-        <div className="text-white text-sm">
-          <span className="font-medium">Comparisons:</span>{" "}
-          <span className="font-mono">{comparisons.toLocaleString()}</span>
-        </div>
-        <div className="text-white text-sm">
-          <span className="font-medium">Swaps:</span> <span className="font-mono">{swaps.toLocaleString()}</span>
-        </div>
-      </div>
+      <SortStats algorithm={algorithm} comparisons={comparisons} swaps={swaps} />
       <div className="flex-1 flex items-end justify-center px-4 overflow-hidden">
         <div className="w-full max-w-4xl h-96 max-h-full flex items-end justify-center gap-[2px]">
           {numbers.map((num, index) => (
