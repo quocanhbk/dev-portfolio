@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { bubbleSort, insertionSort, mergeSort, quickSort } from "@/lib/sort-algorithms"
 import { useState } from "react"
 import { Helmet } from "react-helmet-async"
 
@@ -8,31 +9,61 @@ type SortAlgorithm = "bubble" | "quick" | "merge" | "insertion"
 
 const SortSimulation = () => {
   const [arrayLength, setArrayLength] = useState<number>(50)
-
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<SortAlgorithm>("bubble")
-
   const [numbers, setNumbers] = useState<number[]>(() =>
-    Array.from({ length: arrayLength }, () => Math.floor(Math.random() * 10000) + 1),
+    Array.from({ length: arrayLength }, () => Math.floor(Math.random() * 100) + 1),
   )
   const [isSorting, setIsSorting] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(-1)
+  const [comparingIndex, setComparingIndex] = useState(-1)
 
-  const generateNewArray = (arrayLength: number) => {
-    setNumbers(Array.from({ length: arrayLength }, () => Math.floor(Math.random() * 10000) + 1))
-  }
-
-  const handleStart = () => {
+  const handleStart = async () => {
     setIsSorting(true)
-    // Sorting implementation will go here
+
+    try {
+      switch (selectedAlgorithm) {
+        case "bubble":
+          await bubbleSort(numbers, setNumbers, setCurrentIndex, setComparingIndex)
+          break
+        case "insertion":
+          await insertionSort(numbers, setNumbers, setCurrentIndex, setComparingIndex)
+          break
+        case "merge":
+          await mergeSort(numbers, setNumbers, setCurrentIndex, setComparingIndex)
+          break
+        case "quick":
+          await quickSort(numbers, setNumbers, setCurrentIndex, setComparingIndex)
+          break
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setCurrentIndex(-1)
+      setComparingIndex(-1)
+      setIsSorting(false)
+    }
   }
 
   const handleReset = () => {
     setIsSorting(false)
+    setCurrentIndex(-1)
+    setComparingIndex(-1)
     generateNewArray(arrayLength)
+  }
+
+  const generateNewArray = (length: number) => {
+    setNumbers(Array.from({ length }, () => Math.floor(Math.random() * 100) + 1))
   }
 
   const handleArrayLengthChange = (value: number) => {
     setArrayLength(value)
     generateNewArray(value)
+  }
+
+  const getBarColor = (index: number) => {
+    if (index === currentIndex) return "bg-red-500"
+    if (index === comparingIndex) return "bg-blue-500"
+    return "bg-green-500"
   }
 
   return (
@@ -82,14 +113,14 @@ const SortSimulation = () => {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center">
+        <div className="flex-1 flex flex-col items-center justify-center px-4">
           <div className="w-full max-w-4xl h-96 flex items-end justify-center gap-[2px]">
             {numbers.map((num, index) => (
               <div
                 key={index}
-                className="flex-1 bg-green-500 transition-all duration-150"
+                className={`flex-1 ${getBarColor(index)}`}
                 style={{
-                  height: `${num / 100}%`,
+                  height: `${num}%`,
                 }}
               />
             ))}
