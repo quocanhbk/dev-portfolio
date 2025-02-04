@@ -1,10 +1,11 @@
-import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
+import { SORT_ANIMATION_SPEED_MS } from "@/constants"
+import { SortFunction, sleep } from "./types"
 
 export interface SortHookProps {
   animationSpeedMs?: number
 }
 
-export const useBubbleSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useBubbleSort = ({ animationSpeedMs = SORT_ANIMATION_SPEED_MS }: SortHookProps) => {
   const bubbleSort: SortFunction = async ({
     numbers,
     setNumbers,

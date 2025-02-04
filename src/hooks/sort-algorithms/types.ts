@@ -1,3 +1,5 @@
+import { SORT_ALGORITHMS } from "@/constants"
+
 export interface SortFunctionParams {
   numbers: number[]
   setNumbers: (numbers: number[]) => void
@@ -12,4 +14,5 @@ export type SortFunction = (params: SortFunctionParams) => Promise<boolean>
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-export const ANIMATION_SPEED_MS = 10
+
+export type SortAlgorithm = (typeof SORT_ALGORITHMS)[number]["value"]

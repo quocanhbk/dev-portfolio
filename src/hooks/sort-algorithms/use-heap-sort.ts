@@ -1,7 +1,8 @@
-import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
+import { SORT_ANIMATION_SPEED_MS } from "@/constants"
+import { SortFunction, sleep } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useHeapSort = ({ animationSpeedMs = SORT_ANIMATION_SPEED_MS }: SortHookProps) => {
   const heapify = async (
     arr: number[],
     n: number,

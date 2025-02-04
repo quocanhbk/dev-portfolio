@@ -1,7 +1,8 @@
-import { ANIMATION_SPEED_MS, sleep, SortFunction } from "./types"
+import { SORT_ANIMATION_SPEED_MS } from "@/constants"
+import { sleep, SortFunction } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useMergeSort = ({ animationSpeedMs = SORT_ANIMATION_SPEED_MS }: SortHookProps) => {
   const merge = async (
     arr: number[],
     left: number,

@@ -54,3 +54,5 @@ export const SORT_ALGORITHMS = [
       "A comparison-based sorting algorithm that uses a binary heap data structure to build a max-heap and repeatedly extract the maximum element.",
   },
 ] as const
+
+export const SORT_ANIMATION_SPEED_MS = 10
