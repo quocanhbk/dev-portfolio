@@ -10,8 +10,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     setNumbers: (numbers: number[]) => void,
     setCurrentIndex: (index: number) => void,
     setComparingIndex: (index: number) => void,
-    setComparisons: (value: number | ((prev: number) => number)) => void,
-    setSwaps: (value: number | ((prev: number) => number)) => void,
+    increaseComparisons: () => void,
+    increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
     const n1 = middle - left + 1
@@ -31,18 +31,18 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
       setComparingIndex(middle + 1 + j)
       await sleep(animationSpeedMs)
 
-      setComparisons(prev => prev + 1)
+      increaseComparisons()
       if (L[i] <= R[j]) {
         if (arr[k] !== L[i]) {
           arr[k] = L[i]
-          setSwaps(prev => prev + 1)
+          increaseSwaps()
           setNumbers([...arr])
         }
         i++
       } else {
         if (arr[k] !== R[j]) {
           arr[k] = R[j]
-          setSwaps(prev => prev + 1)
+          increaseSwaps()
           setNumbers([...arr])
         }
         j++
@@ -54,7 +54,7 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
       if (!isSortingRef.current) return
       if (arr[k] !== L[i]) {
         arr[k] = L[i]
-        setSwaps(prev => prev + 1)
+        increaseSwaps()
         setNumbers([...arr])
       }
       i++
@@ -65,7 +65,7 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
       if (!isSortingRef.current) return
       if (arr[k] !== R[j]) {
         arr[k] = R[j]
-        setSwaps(prev => prev + 1)
+        increaseSwaps()
         setNumbers([...arr])
       }
       j++
@@ -80,8 +80,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     setNumbers: (numbers: number[]) => void,
     setCurrentIndex: (index: number) => void,
     setComparingIndex: (index: number) => void,
-    setComparisons: (value: number | ((prev: number) => number)) => void,
-    setSwaps: (value: number | ((prev: number) => number)) => void,
+    increaseComparisons: () => void,
+    increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
     if (left < right && isSortingRef.current) {
@@ -94,8 +94,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         setNumbers,
         setCurrentIndex,
         setComparingIndex,
-        setComparisons,
-        setSwaps,
+        increaseComparisons,
+        increaseSwaps,
         isSortingRef,
       )
       await mergeSortHelper(
@@ -105,8 +105,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         setNumbers,
         setCurrentIndex,
         setComparingIndex,
-        setComparisons,
-        setSwaps,
+        increaseComparisons,
+        increaseSwaps,
         isSortingRef,
       )
       await merge(
@@ -117,8 +117,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         setNumbers,
         setCurrentIndex,
         setComparingIndex,
-        setComparisons,
-        setSwaps,
+        increaseComparisons,
+        increaseSwaps,
         isSortingRef,
       )
     }
@@ -129,8 +129,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     setNumbers,
     setCurrentIndex,
     setComparingIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -141,8 +141,8 @@ export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
       setNumbers,
       setCurrentIndex,
       setComparingIndex,
-      setComparisons,
-      setSwaps,
+      increaseComparisons,
+      increaseSwaps,
       isSortingRef,
     )
   }

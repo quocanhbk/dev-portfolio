@@ -1,4 +1,9 @@
+import { SORT_ALGORITHMS } from "@/constants"
+import { memo } from "react"
+import { SortAlgorithm } from "./types"
+
 interface SortChartProps {
+  algorithm: SortAlgorithm
   numbers: number[]
   currentIndex: number
   comparingIndex: number
@@ -6,16 +11,19 @@ interface SortChartProps {
   swaps: number
 }
 
-const SortChart = ({ numbers, currentIndex, comparingIndex, comparisons, swaps }: SortChartProps) => {
+const SortChart = ({ algorithm, numbers, currentIndex, comparingIndex, comparisons, swaps }: SortChartProps) => {
   const getBarColor = (index: number) => {
     if (index === currentIndex) return "bg-red-500"
     if (index === comparingIndex) return "bg-blue-500"
     return "bg-green-500"
   }
 
+  const algorithmInfo = SORT_ALGORITHMS.find(a => a.value === algorithm)
+
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col bg-neutral-900">
       <div className="p-4 flex justify-end space-x-6">
+        <div className="text-white text-sm font-mono font-bold">{algorithmInfo?.name}</div>
         <div className="text-white text-sm">
           <span className="font-medium">Comparisons:</span>{" "}
           <span className="font-mono">{comparisons.toLocaleString()}</span>
@@ -42,4 +50,4 @@ const SortChart = ({ numbers, currentIndex, comparingIndex, comparisons, swaps }
   )
 }
 
-export default SortChart
+export default memo(SortChart)

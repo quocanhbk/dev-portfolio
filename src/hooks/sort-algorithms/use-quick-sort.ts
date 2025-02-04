@@ -9,8 +9,8 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     setNumbers: (numbers: number[]) => void,
     setCurrentIndex: (index: number) => void,
     setComparingIndex: (index: number) => void,
-    setComparisons: (value: number | ((prev: number) => number)) => void,
-    setSwaps: (value: number | ((prev: number) => number)) => void,
+    increaseComparisons: () => void,
+    increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
     const pivot = arr[high]
@@ -23,18 +23,18 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
       setComparingIndex(high)
       await sleep(animationSpeedMs)
 
-      setComparisons(prev => prev + 1)
+      increaseComparisons()
       if (arr[j] < pivot) {
         i++
         ;[arr[i], arr[j]] = [arr[j], arr[i]]
-        setSwaps(prev => prev + 1)
+        increaseSwaps()
         setNumbers([...arr])
       }
     }
 
     if (i + 1 !== high) {
       ;[arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]
-      setSwaps(prev => prev + 1)
+      increaseSwaps()
       setNumbers([...arr])
     }
     return i + 1
@@ -47,8 +47,8 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     setNumbers: (numbers: number[]) => void,
     setCurrentIndex: (index: number) => void,
     setComparingIndex: (index: number) => void,
-    setComparisons: (value: number | ((prev: number) => number)) => void,
-    setSwaps: (value: number | ((prev: number) => number)) => void,
+    increaseComparisons: () => void,
+    increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
     if (low < high && isSortingRef.current) {
@@ -59,8 +59,8 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         setNumbers,
         setCurrentIndex,
         setComparingIndex,
-        setComparisons,
-        setSwaps,
+        increaseComparisons,
+        increaseSwaps,
         isSortingRef,
       )
       if (pi === -1) return // sorting was cancelled
@@ -71,8 +71,8 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         setNumbers,
         setCurrentIndex,
         setComparingIndex,
-        setComparisons,
-        setSwaps,
+        increaseComparisons,
+        increaseSwaps,
         isSortingRef,
       )
       await quickSortHelper(
@@ -82,8 +82,8 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         setNumbers,
         setCurrentIndex,
         setComparingIndex,
-        setComparisons,
-        setSwaps,
+        increaseComparisons,
+        increaseSwaps,
         isSortingRef,
       )
     }
@@ -94,8 +94,8 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     setNumbers,
     setCurrentIndex,
     setComparingIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -106,8 +106,8 @@ export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
       setNumbers,
       setCurrentIndex,
       setComparingIndex,
-      setComparisons,
-      setSwaps,
+      increaseComparisons,
+      increaseSwaps,
       isSortingRef,
     )
   }

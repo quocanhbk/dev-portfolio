@@ -6,7 +6,7 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
     arr: number[],
     k: number,
     setNumbers: (numbers: number[]) => void,
-    setSwaps: (cb: (prev: number) => number) => void,
+    increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
     let left = 0
@@ -17,15 +17,15 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
       ;[arr[left], arr[right]] = [arr[right], arr[left]]
       left++
       right--
-      setSwaps(prev => prev + 1)
+      increaseSwaps()
       setNumbers([...arr])
     }
   }
 
-  const findMax = (arr: number[], k: number, setComparisons: (cb: (prev: number) => number) => void) => {
+  const findMax = (arr: number[], k: number, increaseComparisons: () => void) => {
     let maxIndex = 0
     for (let i = 0; i <= k; i++) {
-      setComparisons(prev => prev + 1)
+      increaseComparisons()
       if (arr[i] > arr[maxIndex]) {
         maxIndex = i
       }
@@ -38,8 +38,8 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
     setNumbers,
     setCurrentIndex,
     setComparingIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -51,17 +51,17 @@ export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHo
       await sleep(animationSpeedMs)
 
       // Find the maximum element in arr[0..i]
-      const maxIndex = findMax(arr, i, setComparisons)
+      const maxIndex = findMax(arr, i, increaseComparisons)
       setComparingIndex(maxIndex)
 
       if (maxIndex !== i) {
         // Flip the array to bring max element to beginning
         if (maxIndex !== 0) {
-          await flip(arr, maxIndex, setNumbers, setSwaps, isSortingRef)
+          await flip(arr, maxIndex, setNumbers, increaseSwaps, isSortingRef)
           await sleep(animationSpeedMs)
         }
         // Flip the array to bring max element to its correct position
-        await flip(arr, i, setNumbers, setSwaps, isSortingRef)
+        await flip(arr, i, setNumbers, increaseSwaps, isSortingRef)
         await sleep(animationSpeedMs)
       }
     }

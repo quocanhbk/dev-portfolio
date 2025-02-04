@@ -10,8 +10,8 @@ export const useBubbleSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHoo
     setNumbers,
     setCurrentIndex,
     setComparingIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -25,10 +25,10 @@ export const useBubbleSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHoo
         setComparingIndex(j + 1)
         await sleep(animationSpeedMs)
 
-        setComparisons(prev => prev + 1)
+        increaseComparisons()
         if (arr[j] > arr[j + 1]) {
           ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
-          setSwaps(prev => prev + 1)
+          increaseSwaps()
           setNumbers([...arr])
         }
       }

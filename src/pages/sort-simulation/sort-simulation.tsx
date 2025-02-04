@@ -1,73 +1,106 @@
-import { useSortAlgorithm } from "@/hooks/sort-algorithms/"
+import { useSortAlgorithms } from "@/hooks/sort-algorithms/"
 import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import SortChart from "./sort-chart"
 import SortControls from "./sort-controls"
 import { type SortAlgorithm } from "./types"
 
+interface AlgorithmState {
+  id: string
+  algorithm: SortAlgorithm
+  numbers: number[]
+  currentIndex: number
+  comparingIndex: number
+  comparisons: number
+  swaps: number
+}
+
 const SortSimulation = () => {
   const [arrayLength, setArrayLength] = useState(50)
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState<SortAlgorithm>("bubble")
   const [animationSpeed, setAnimationSpeed] = useState(10)
-  const [numbers, setNumbers] = useState(() =>
-    Array.from({ length: arrayLength }, () => Math.floor(Math.random() * 100) + 1),
-  )
-  const [isSorting, setIsSorting] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(-1)
-  const [comparingIndex, setComparingIndex] = useState(-1)
-  const isSortingRef = useRef(false)
 
-  const [comparisons, setComparisons] = useState(0)
-  const [swaps, setSwaps] = useState(0)
-
-  const sortFunction = useSortAlgorithm({
-    animationSpeedMs: animationSpeed,
-    algorithm: selectedAlgorithm,
+  const generateAlgorithmState = (length: number, algorithm: SortAlgorithm): AlgorithmState => ({
+    id: Date.now().toString(),
+    algorithm,
+    numbers: Array.from({ length }, () => Math.floor(Math.random() * 100) + 1),
+    currentIndex: -1,
+    comparingIndex: -1,
+    comparisons: 0,
+    swaps: 0,
   })
 
+  const [algorithms, setAlgorithms] = useState<AlgorithmState[]>([generateAlgorithmState(arrayLength, "bubble")])
+
+  const [isSorting, setIsSorting] = useState([false])
+  const isSortingRef = useRef([{ current: false }])
+
+  const sortFunctions = useSortAlgorithms({
+    animationSpeedMs: animationSpeed,
+    algorithms: algorithms.map(algorithm => algorithm.algorithm),
+  })
+
+  const resetStats = () => {
+    setAlgorithms(prev => prev.map(algorithm => ({ ...algorithm, comparisons: 0, swaps: 0 })))
+  }
+
   const handleStart = async () => {
-    setIsSorting(true)
-    isSortingRef.current = true
-    setComparisons(0)
-    setSwaps(0)
+    resetStats()
+
+    setSorting(true)
+
+    const promises = algorithms.map((algorithm, index) => {
+      return sortFunctions[index]({
+        numbers: algorithm.numbers,
+        setNumbers: (numbers: number[]) =>
+          setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, numbers } : a))),
+        setCurrentIndex: (numberIndex: number) =>
+          setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, currentIndex: numberIndex } : a))),
+        setComparingIndex: (numberIndex: number) =>
+          setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, comparingIndex: numberIndex } : a))),
+        increaseComparisons: () =>
+          setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, comparisons: a.comparisons + 1 } : a))),
+        increaseSwaps: () =>
+          setAlgorithms(prev => prev.map((a, i) => (i === index ? { ...a, swaps: a.swaps + 1 } : a))),
+        isSortingRef: isSortingRef.current[index],
+      })
+    })
 
     try {
-      await sortFunction({
-        numbers,
-        setNumbers,
-        setCurrentIndex,
-        setComparingIndex,
-        setComparisons,
-        setSwaps,
-        isSortingRef,
-      })
+      await Promise.all(promises)
     } catch (error) {
       console.error(error)
     } finally {
-      isSortingRef.current = false
-      setIsSorting(false)
-      setCurrentIndex(-1)
-      setComparingIndex(-1)
+      setSorting(false)
     }
   }
 
+  const setSorting = (value: boolean) => {
+    isSortingRef.current.forEach(ref => {
+      ref.current = value
+    })
+    setIsSorting(algorithms.map(() => value))
+  }
+
   const handleStop = () => {
-    isSortingRef.current = false
-    setIsSorting(false)
+    setSorting(false)
   }
 
   const handleReset = (length: number) => {
-    isSortingRef.current = false
-    setIsSorting(false)
-    setCurrentIndex(-1)
-    setComparingIndex(-1)
-    setComparisons(0)
-    setSwaps(0)
-    generateNewArray(length)
+    setSorting(false)
+    resetAlgorithmStates(length)
   }
 
-  const generateNewArray = (length: number) => {
-    setNumbers(Array.from({ length }, () => Math.floor(Math.random() * 100) + 1))
+  const resetAlgorithmStates = (length: number) => {
+    setAlgorithms(prev =>
+      prev.map(algorithm => ({
+        ...algorithm,
+        numbers: Array.from({ length }, () => Math.floor(Math.random() * 100) + 1),
+        comparingIndex: -1,
+        currentIndex: -1,
+        comparisons: 0,
+        swaps: 0,
+      })),
+    )
   }
 
   const handleArrayLengthChange = (value: number) => {
@@ -75,14 +108,31 @@ const SortSimulation = () => {
     handleReset(value)
   }
 
-  const handleAlgorithmChange = (value: SortAlgorithm) => {
-    setSelectedAlgorithm(value)
+  const handleAlgorithmChange = (index: number, value: SortAlgorithm) => {
+    setAlgorithms(prev =>
+      prev.map((algorithm, i) => (i === index ? generateAlgorithmState(arrayLength, value) : algorithm)),
+    )
     handleReset(arrayLength)
   }
 
   const handleAnimationSpeedChange = (value: number) => {
     setAnimationSpeed(value)
     handleReset(arrayLength)
+  }
+
+  const handleAddAlgorithm = () => {
+    setAlgorithms(prev => [...prev, generateAlgorithmState(arrayLength, "bubble")])
+    setIsSorting(prev => [...prev.map(() => false), false])
+    isSortingRef.current.forEach(ref => {
+      ref.current = false
+    })
+    isSortingRef.current.push({ current: false })
+  }
+
+  const handleRemoveAlgorithm = (index: number) => {
+    setAlgorithms(prev => prev.filter((_, i) => i !== index))
+    setIsSorting(prev => prev.filter((_, i) => i !== index))
+    isSortingRef.current.splice(index, 1)
   }
 
   return (
@@ -94,22 +144,30 @@ const SortSimulation = () => {
         <SortControls
           arrayLength={arrayLength}
           onArrayLengthChange={handleArrayLengthChange}
-          selectedAlgorithm={selectedAlgorithm}
+          selectedAlgorithms={algorithms.map(algorithm => algorithm.algorithm)}
           onAlgorithmChange={handleAlgorithmChange}
           animationSpeed={animationSpeed}
           onAnimationSpeedChange={handleAnimationSpeedChange}
-          isSorting={isSorting}
+          isSorting={isSorting.some(isSorting => isSorting)}
           onStart={handleStart}
           onStop={handleStop}
           onReset={() => handleReset(arrayLength)}
+          onAddAlgorithm={handleAddAlgorithm}
+          onRemoveAlgorithm={handleRemoveAlgorithm}
         />
-        <SortChart
-          numbers={numbers}
-          currentIndex={currentIndex}
-          comparingIndex={comparingIndex}
-          comparisons={comparisons}
-          swaps={swaps}
-        />
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(32rem,1fr))] gap-px auto-rows-fr bg-neutral-800">
+          {algorithms.map(algorithm => (
+            <SortChart
+              key={algorithm.id}
+              algorithm={algorithm.algorithm}
+              numbers={algorithm.numbers}
+              currentIndex={algorithm.currentIndex}
+              comparingIndex={algorithm.comparingIndex}
+              comparisons={algorithm.comparisons}
+              swaps={algorithm.swaps}
+            />
+          ))}
+        </div>
       </div>
     </>
   )

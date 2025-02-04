@@ -7,8 +7,8 @@ export const useInsertionSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: Sort
     setNumbers,
     setCurrentIndex,
     setComparingIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -27,10 +27,10 @@ export const useInsertionSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: Sort
         setComparingIndex(j)
         await sleep(animationSpeedMs)
 
-        setComparisons(prev => prev + 1)
+        increaseComparisons()
         if (arr[j] > key) {
           arr[j + 1] = arr[j]
-          setSwaps(prev => prev + 1)
+          increaseSwaps()
           setNumbers([...arr])
           j--
         } else {
@@ -40,7 +40,7 @@ export const useInsertionSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: Sort
 
       if (j + 1 !== i) {
         arr[j + 1] = key
-        setSwaps(prev => prev + 1)
+        increaseSwaps()
         setNumbers([...arr])
       }
     }

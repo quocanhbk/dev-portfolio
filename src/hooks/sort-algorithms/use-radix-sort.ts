@@ -6,8 +6,8 @@ export const useRadixSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     numbers,
     setNumbers,
     setCurrentIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -27,7 +27,7 @@ export const useRadixSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         count[digit]++
         setCurrentIndex(i)
         await sleep(animationSpeedMs)
-        setComparisons(prev => prev + 1)
+        increaseComparisons()
       }
 
       // Change count[i] so that count[i] contains actual
@@ -42,7 +42,7 @@ export const useRadixSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         const digit = Math.floor(arr[i] / exp) % 10
         output[count[digit] - 1] = arr[i]
         count[digit]--
-        setSwaps(prev => prev + 1)
+        increaseSwaps()
       }
 
       // Copy the output array to arr[]

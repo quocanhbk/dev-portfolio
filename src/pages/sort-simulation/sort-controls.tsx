@@ -8,20 +8,22 @@ import { type SortAlgorithm } from "./types"
 interface SortControlsProps {
   arrayLength: number
   onArrayLengthChange: (value: number) => void
-  selectedAlgorithm: SortAlgorithm
-  onAlgorithmChange: (value: SortAlgorithm) => void
+  selectedAlgorithms: SortAlgorithm[]
+  onAlgorithmChange: (index: number, value: SortAlgorithm) => void
   animationSpeed: number
   onAnimationSpeedChange: (value: number) => void
   isSorting: boolean
   onStart: () => void
   onStop: () => void
   onReset: () => void
+  onAddAlgorithm: () => void
+  onRemoveAlgorithm: (index: number) => void
 }
 
 const SortControls = ({
   arrayLength,
   onArrayLengthChange,
-  selectedAlgorithm,
+  selectedAlgorithms,
   onAlgorithmChange,
   animationSpeed,
   onAnimationSpeedChange,
@@ -29,24 +31,36 @@ const SortControls = ({
   onStart,
   onStop,
   onReset,
+  onAddAlgorithm,
+  onRemoveAlgorithm,
 }: SortControlsProps) => {
   return (
     <div className="w-80 bg-slate-800 p-6 flex flex-col">
       <h2 className="text-white text-xl font-bold mb-6">Controls</h2>
       <div className="space-y-12 flex-1">
         <SortControl label="Algorithm">
-          <Select value={selectedAlgorithm} onValueChange={value => onAlgorithmChange(value as SortAlgorithm)}>
-            <SelectTrigger className="w-full bg-slate-700">
-              <SelectValue placeholder="Algorithm" />
-            </SelectTrigger>
-            <SelectContent>
-              {SORT_ALGORITHMS.map(algorithm => (
-                <SelectItem key={algorithm.value} value={algorithm.value}>
-                  {algorithm.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="flex flex-col gap-4">
+            {selectedAlgorithms.map((algorithm, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <Select value={algorithm} onValueChange={value => onAlgorithmChange(index, value as SortAlgorithm)}>
+                  <SelectTrigger className="w-full bg-slate-700">
+                    <SelectValue placeholder="Algorithm" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SORT_ALGORITHMS.map(algorithm => (
+                      <SelectItem key={algorithm.value} value={algorithm.value}>
+                        {algorithm.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button variant={"outline"} onClick={() => onRemoveAlgorithm(index)}>
+                  Remove
+                </Button>
+              </div>
+            ))}
+            <Button onClick={onAddAlgorithm}>Add Algorithm</Button>
+          </div>
         </SortControl>
         <SortControl label="Size">
           <Slider

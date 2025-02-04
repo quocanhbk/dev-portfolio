@@ -3,8 +3,8 @@ export interface SortFunctionParams {
   setNumbers: (numbers: number[]) => void
   setCurrentIndex: (index: number) => void
   setComparingIndex: (index: number) => void
-  setComparisons: (value: number | ((prev: number) => number)) => void
-  setSwaps: (value: number | ((prev: number) => number)) => void
+  increaseComparisons: () => void
+  increaseSwaps: () => void
   isSortingRef: { current: boolean }
 }
 

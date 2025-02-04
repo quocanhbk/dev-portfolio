@@ -7,8 +7,8 @@ export const useShellSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
     setNumbers,
     setCurrentIndex,
     setComparingIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -31,9 +31,9 @@ export const useShellSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHook
         while (j >= gap && arr[j - gap] > temp) {
           if (!isSortingRef.current) return
 
-          setComparisons(prev => prev + 1)
+          increaseComparisons()
           arr[j] = arr[j - gap]
-          setSwaps(prev => prev + 1)
+          increaseSwaps()
           setNumbers([...arr])
 
           j -= gap

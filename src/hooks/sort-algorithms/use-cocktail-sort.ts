@@ -7,8 +7,8 @@ export const useCocktailSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortH
     setNumbers,
     setCurrentIndex,
     setComparingIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -27,10 +27,10 @@ export const useCocktailSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortH
         setComparingIndex(i + 1)
         await sleep(animationSpeedMs)
 
-        setComparisons(prev => prev + 1)
+        increaseComparisons()
         if (arr[i] > arr[i + 1]) {
           ;[arr[i], arr[i + 1]] = [arr[i + 1], arr[i]]
-          setSwaps(prev => prev + 1)
+          increaseSwaps()
           setNumbers([...arr])
           swapped = true
         }
@@ -48,10 +48,10 @@ export const useCocktailSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortH
         setComparingIndex(i + 1)
         await sleep(animationSpeedMs)
 
-        setComparisons(prev => prev + 1)
+        increaseComparisons()
         if (arr[i] > arr[i + 1]) {
           ;[arr[i], arr[i + 1]] = [arr[i + 1], arr[i]]
-          setSwaps(prev => prev + 1)
+          increaseSwaps()
           setNumbers([...arr])
           swapped = true
         }

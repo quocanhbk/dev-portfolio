@@ -9,8 +9,8 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
     setNumbers: (numbers: number[]) => void,
     setCurrentIndex: (index: number) => void,
     setComparingIndex: (index: number) => void,
-    setComparisons: (cb: (prev: number) => number) => void,
-    setSwaps: (cb: (prev: number) => number) => void,
+    increaseComparisons: () => void,
+    increaseSwaps: () => void,
     isSortingRef: { current: boolean },
   ) => {
     if (!isSortingRef.current) return
@@ -26,7 +26,7 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
     if (left < n) {
       setComparingIndex(left)
       await sleep(animationSpeedMs)
-      setComparisons(prev => prev + 1)
+      increaseComparisons()
       if (arr[left] > arr[largest]) {
         largest = left
       }
@@ -36,7 +36,7 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
     if (right < n) {
       setComparingIndex(right)
       await sleep(animationSpeedMs)
-      setComparisons(prev => prev + 1)
+      increaseComparisons()
       if (arr[right] > arr[largest]) {
         largest = right
       }
@@ -45,7 +45,7 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
     // If largest is not root
     if (largest !== i) {
       ;[arr[i], arr[largest]] = [arr[largest], arr[i]]
-      setSwaps(prev => prev + 1)
+      increaseSwaps()
       setNumbers([...arr])
 
       // Recursively heapify the affected sub-tree
@@ -56,8 +56,8 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
         setNumbers,
         setCurrentIndex,
         setComparingIndex,
-        setComparisons,
-        setSwaps,
+        increaseComparisons,
+        increaseSwaps,
         isSortingRef,
       )
     }
@@ -68,8 +68,8 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
     setNumbers,
     setCurrentIndex,
     setComparingIndex,
-    setComparisons,
-    setSwaps,
+    increaseComparisons,
+    increaseSwaps,
     isSortingRef,
   }) => {
     const arr = [...numbers]
@@ -78,18 +78,38 @@ export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookP
     // Build max heap
     for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
       if (!isSortingRef.current) return
-      await heapify(arr, n, i, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps, isSortingRef)
+      await heapify(
+        arr,
+        n,
+        i,
+        setNumbers,
+        setCurrentIndex,
+        setComparingIndex,
+        increaseComparisons,
+        increaseSwaps,
+        isSortingRef,
+      )
     }
 
     // Extract elements from heap one by one
     for (let i = n - 1; i > 0; i--) {
       if (!isSortingRef.current) return // Move current root to end
       ;[arr[0], arr[i]] = [arr[i], arr[0]]
-      setSwaps(prev => prev + 1)
+      increaseSwaps()
       setNumbers([...arr])
 
       // Heapify reduced heap
-      await heapify(arr, i, 0, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps, isSortingRef)
+      await heapify(
+        arr,
+        i,
+        0,
+        setNumbers,
+        setCurrentIndex,
+        setComparingIndex,
+        increaseComparisons,
+        increaseSwaps,
+        isSortingRef,
+      )
     }
   }
 
