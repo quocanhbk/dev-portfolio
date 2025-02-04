@@ -28,7 +28,7 @@ const SortChart = ({ algorithm, numbers, currentIndex, comparingIndex, compariso
               key={index}
               className={`flex-1 ${getBarColor(index)}`}
               style={{
-                height: `${num}%`,
+                height: `${num / 100}%`,
               }}
             />
           ))}

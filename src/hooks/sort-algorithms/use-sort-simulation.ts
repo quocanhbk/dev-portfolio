@@ -20,7 +20,7 @@ export interface SortSimulationProps {
 
 const generateAlgorithmState = (length: number, algorithm: SortAlgorithm): AlgorithmState => ({
   algorithm,
-  numbers: Array.from({ length }, () => Math.floor(Math.random() * 100) + 1),
+  numbers: Array.from({ length }, () => Math.floor(Math.random() * 10000) + 1),
   currentIndex: -1,
   comparingIndex: -1,
   comparisons: 0,
@@ -46,8 +46,8 @@ export const useSortSimulation = ({ arrayLength, animationSpeedMs }: SortSimulat
     setIsSorting(algorithms.map(() => value))
   }
 
-  const resetStats = ({ isResuming = false }: { isResuming?: boolean } = {}) => {
-    const shouldResetStats = !isResuming || (isResuming && algorithms.every(algorithm => algorithm.isSorted))
+  const resetStats = () => {
+    const shouldResetStats = algorithms.every(algorithm => algorithm.isSorted)
 
     setAlgorithms(prev =>
       prev.map(algorithm => ({
@@ -60,7 +60,7 @@ export const useSortSimulation = ({ arrayLength, animationSpeedMs }: SortSimulat
   }
 
   const start = async () => {
-    resetStats({ isResuming: true })
+    resetStats()
     setSorting(true)
 
     const promises = algorithms.map(async (algorithm, index) => {

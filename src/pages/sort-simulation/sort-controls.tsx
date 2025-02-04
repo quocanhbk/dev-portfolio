@@ -91,7 +91,7 @@ const SortControls = ({
       </div>
       <div className="space-y-3 flex flex-col mt-12">
         <Button onClick={() => (isSorting ? onStop() : onStart())}>{isSorting ? "Stop" : "Start"}</Button>
-        <Button onClick={onReset} variant={"outline"}>
+        <Button onClick={() => onReset()} variant={"outline"}>
           Reset
         </Button>
       </div>
