@@ -1,8 +1,15 @@
 import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useRadixSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
-  const radixSort: SortFunction = async ({ numbers, setNumbers, setCurrentIndex, setComparisons, setSwaps }) => {
+export const useRadixSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+  const radixSort: SortFunction = async ({
+    numbers,
+    setNumbers,
+    setCurrentIndex,
+    setComparisons,
+    setSwaps,
+    isSortingRef,
+  }) => {
     const arr = [...numbers]
     const max = Math.max(...arr)
 

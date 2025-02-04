@@ -5,6 +5,7 @@ export interface SortFunctionParams {
   setComparingIndex: (index: number) => void
   setComparisons: (value: number | ((prev: number) => number)) => void
   setSwaps: (value: number | ((prev: number) => number)) => void
+  isSortingRef: { current: boolean }
 }
 
 export type SortFunction = (params: SortFunctionParams) => Promise<void>

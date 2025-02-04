@@ -1,12 +1,13 @@
 import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const usePancakeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const usePancakeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const flip = async (
     arr: number[],
     k: number,
     setNumbers: (numbers: number[]) => void,
     setSwaps: (cb: (prev: number) => number) => void,
+    isSortingRef: { current: boolean },
   ) => {
     let left = 0
     let right = k
@@ -39,6 +40,7 @@ export const usePancakeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEE
     setComparingIndex,
     setComparisons,
     setSwaps,
+    isSortingRef,
   }) => {
     const arr = [...numbers]
 
@@ -55,11 +57,11 @@ export const usePancakeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEE
       if (maxIndex !== i) {
         // Flip the array to bring max element to beginning
         if (maxIndex !== 0) {
-          await flip(arr, maxIndex, setNumbers, setSwaps)
+          await flip(arr, maxIndex, setNumbers, setSwaps, isSortingRef)
           await sleep(animationSpeedMs)
         }
         // Flip the array to bring max element to its correct position
-        await flip(arr, i, setNumbers, setSwaps)
+        await flip(arr, i, setNumbers, setSwaps, isSortingRef)
         await sleep(animationSpeedMs)
       }
     }

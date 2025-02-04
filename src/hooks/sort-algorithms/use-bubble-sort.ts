@@ -1,12 +1,10 @@
 import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
 
 export interface SortHookProps {
-  isSortingRef: React.MutableRefObject<boolean>
-
   animationSpeedMs?: number
 }
 
-export const useBubbleSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useBubbleSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const bubbleSort: SortFunction = async ({
     numbers,
     setNumbers,
@@ -14,6 +12,7 @@ export const useBubbleSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED
     setComparingIndex,
     setComparisons,
     setSwaps,
+    isSortingRef,
   }) => {
     const arr = [...numbers]
     const n = arr.length

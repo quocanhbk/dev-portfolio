@@ -1,7 +1,7 @@
 import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useCocktailSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useCocktailSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const cocktailSort: SortFunction = async ({
     numbers,
     setNumbers,
@@ -9,6 +9,7 @@ export const useCocktailSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPE
     setComparingIndex,
     setComparisons,
     setSwaps,
+    isSortingRef,
   }) => {
     const arr = [...numbers]
     let start = 0

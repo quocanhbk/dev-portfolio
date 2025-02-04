@@ -1,7 +1,7 @@
 import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useShellSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useShellSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const shellSort: SortFunction = async ({
     numbers,
     setNumbers,
@@ -9,6 +9,7 @@ export const useShellSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
     setComparingIndex,
     setComparisons,
     setSwaps,
+    isSortingRef,
   }) => {
     const arr = [...numbers]
     const n = arr.length

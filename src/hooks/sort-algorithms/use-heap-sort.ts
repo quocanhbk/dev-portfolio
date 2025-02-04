@@ -1,7 +1,7 @@
 import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useHeapSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useHeapSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const heapify = async (
     arr: number[],
     n: number,
@@ -11,6 +11,7 @@ export const useHeapSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_M
     setComparingIndex: (index: number) => void,
     setComparisons: (cb: (prev: number) => number) => void,
     setSwaps: (cb: (prev: number) => number) => void,
+    isSortingRef: { current: boolean },
   ) => {
     if (!isSortingRef.current) return
 
@@ -48,7 +49,17 @@ export const useHeapSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_M
       setNumbers([...arr])
 
       // Recursively heapify the affected sub-tree
-      await heapify(arr, n, largest, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps)
+      await heapify(
+        arr,
+        n,
+        largest,
+        setNumbers,
+        setCurrentIndex,
+        setComparingIndex,
+        setComparisons,
+        setSwaps,
+        isSortingRef,
+      )
     }
   }
 
@@ -59,6 +70,7 @@ export const useHeapSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_M
     setComparingIndex,
     setComparisons,
     setSwaps,
+    isSortingRef,
   }) => {
     const arr = [...numbers]
     const n = arr.length
@@ -66,7 +78,7 @@ export const useHeapSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_M
     // Build max heap
     for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
       if (!isSortingRef.current) return
-      await heapify(arr, n, i, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps)
+      await heapify(arr, n, i, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps, isSortingRef)
     }
 
     // Extract elements from heap one by one
@@ -77,7 +89,7 @@ export const useHeapSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_M
       setNumbers([...arr])
 
       // Heapify reduced heap
-      await heapify(arr, i, 0, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps)
+      await heapify(arr, i, 0, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps, isSortingRef)
     }
   }
 

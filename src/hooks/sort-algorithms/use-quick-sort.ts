@@ -1,7 +1,7 @@
 import { ANIMATION_SPEED_MS, sleep, SortFunction } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useQuickSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const partition = async (
     arr: number[],
     low: number,
@@ -11,6 +11,7 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
     setComparingIndex: (index: number) => void,
     setComparisons: (value: number | ((prev: number) => number)) => void,
     setSwaps: (value: number | ((prev: number) => number)) => void,
+    isSortingRef: { current: boolean },
   ) => {
     const pivot = arr[high]
     let i = low - 1
@@ -48,6 +49,7 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
     setComparingIndex: (index: number) => void,
     setComparisons: (value: number | ((prev: number) => number)) => void,
     setSwaps: (value: number | ((prev: number) => number)) => void,
+    isSortingRef: { current: boolean },
   ) => {
     if (low < high && isSortingRef.current) {
       const pi = await partition(
@@ -59,10 +61,31 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
         setComparingIndex,
         setComparisons,
         setSwaps,
+        isSortingRef,
       )
       if (pi === -1) return // sorting was cancelled
-      await quickSortHelper(arr, low, pi - 1, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps)
-      await quickSortHelper(arr, pi + 1, high, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps)
+      await quickSortHelper(
+        arr,
+        low,
+        pi - 1,
+        setNumbers,
+        setCurrentIndex,
+        setComparingIndex,
+        setComparisons,
+        setSwaps,
+        isSortingRef,
+      )
+      await quickSortHelper(
+        arr,
+        pi + 1,
+        high,
+        setNumbers,
+        setCurrentIndex,
+        setComparingIndex,
+        setComparisons,
+        setSwaps,
+        isSortingRef,
+      )
     }
   }
 
@@ -73,6 +96,7 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
     setComparingIndex,
     setComparisons,
     setSwaps,
+    isSortingRef,
   }) => {
     const arr = [...numbers]
     await quickSortHelper(
@@ -84,6 +108,7 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
       setComparingIndex,
       setComparisons,
       setSwaps,
+      isSortingRef,
     )
   }
 

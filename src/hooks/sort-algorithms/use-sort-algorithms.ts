@@ -10,7 +10,10 @@ import { useQuickSort } from "./use-quick-sort"
 import { useRadixSort } from "./use-radix-sort"
 import { useShellSort } from "./use-shell-sort"
 
-export const useSortAlgorithm = ({ animationSpeedMs, algorithm }: SortHookProps & { algorithm: SortAlgorithm }) => {
+export const useSortAlgorithms = ({
+  animationSpeedMs,
+  algorithms,
+}: SortHookProps & { algorithms: SortAlgorithm[] }) => {
   const bubbleSort = useBubbleSort({ animationSpeedMs })
   const insertionSort = useInsertionSort({ animationSpeedMs })
   const mergeSort = useMergeSort({ animationSpeedMs })
@@ -33,5 +36,5 @@ export const useSortAlgorithm = ({ animationSpeedMs, algorithm }: SortHookProps 
     heap: heapSort,
   }
 
-  return sortMap[algorithm]
+  return algorithms.map(algorithm => sortMap[algorithm])
 }

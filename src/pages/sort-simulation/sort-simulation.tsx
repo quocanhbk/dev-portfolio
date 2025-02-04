@@ -1,4 +1,4 @@
-import { useSortAlgorithm } from "@/hooks/sort-algorithms/use-sort-algorithm"
+import { useSortAlgorithm } from "@/hooks/sort-algorithms/"
 import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import SortChart from "./sort-chart"
@@ -21,7 +21,6 @@ const SortSimulation = () => {
   const [swaps, setSwaps] = useState(0)
 
   const sortFunction = useSortAlgorithm({
-    isSortingRef,
     animationSpeedMs: animationSpeed,
     algorithm: selectedAlgorithm,
   })
@@ -33,7 +32,15 @@ const SortSimulation = () => {
     setSwaps(0)
 
     try {
-      await sortFunction({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
+      await sortFunction({
+        numbers,
+        setNumbers,
+        setCurrentIndex,
+        setComparingIndex,
+        setComparisons,
+        setSwaps,
+        isSortingRef,
+      })
     } catch (error) {
       console.error(error)
     } finally {

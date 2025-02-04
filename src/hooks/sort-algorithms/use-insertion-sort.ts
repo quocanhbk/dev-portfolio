@@ -1,7 +1,7 @@
 import { ANIMATION_SPEED_MS, SortFunction, sleep } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useInsertionSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useInsertionSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const insertionSort: SortFunction = async ({
     numbers,
     setNumbers,
@@ -9,6 +9,7 @@ export const useInsertionSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SP
     setComparingIndex,
     setComparisons,
     setSwaps,
+    isSortingRef,
   }) => {
     const arr = [...numbers]
     const n = arr.length

@@ -1,7 +1,7 @@
 import { ANIMATION_SPEED_MS, sleep, SortFunction } from "./types"
 import { SortHookProps } from "./use-bubble-sort"
 
-export const useMergeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
+export const useMergeSort = ({ animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const merge = async (
     arr: number[],
     left: number,
@@ -12,6 +12,7 @@ export const useMergeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
     setComparingIndex: (index: number) => void,
     setComparisons: (value: number | ((prev: number) => number)) => void,
     setSwaps: (value: number | ((prev: number) => number)) => void,
+    isSortingRef: { current: boolean },
   ) => {
     const n1 = middle - left + 1
     const n2 = right - middle
@@ -81,11 +82,22 @@ export const useMergeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
     setComparingIndex: (index: number) => void,
     setComparisons: (value: number | ((prev: number) => number)) => void,
     setSwaps: (value: number | ((prev: number) => number)) => void,
+    isSortingRef: { current: boolean },
   ) => {
     if (left < right && isSortingRef.current) {
       const middle = Math.floor((left + right) / 2)
 
-      await mergeSortHelper(arr, left, middle, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps)
+      await mergeSortHelper(
+        arr,
+        left,
+        middle,
+        setNumbers,
+        setCurrentIndex,
+        setComparingIndex,
+        setComparisons,
+        setSwaps,
+        isSortingRef,
+      )
       await mergeSortHelper(
         arr,
         middle + 1,
@@ -95,8 +107,20 @@ export const useMergeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
         setComparingIndex,
         setComparisons,
         setSwaps,
+        isSortingRef,
       )
-      await merge(arr, left, middle, right, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps)
+      await merge(
+        arr,
+        left,
+        middle,
+        right,
+        setNumbers,
+        setCurrentIndex,
+        setComparingIndex,
+        setComparisons,
+        setSwaps,
+        isSortingRef,
+      )
     }
   }
 
@@ -107,6 +131,7 @@ export const useMergeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
     setComparingIndex,
     setComparisons,
     setSwaps,
+    isSortingRef,
   }) => {
     const arr = [...numbers]
     await mergeSortHelper(
@@ -118,6 +143,7 @@ export const useMergeSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
       setComparingIndex,
       setComparisons,
       setSwaps,
+      isSortingRef,
     )
   }
 
