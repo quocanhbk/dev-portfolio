@@ -4,7 +4,7 @@ import { SortHookProps } from "./use-bubble-sort"
 
 export const useInsertionSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const insertionSort: SortFunction = useCallback(
-    async ({ numbers, setNumbers, setCurrentIndex, setComparingIndex }) => {
+    async ({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps }) => {
       const arr = [...numbers]
       const n = arr.length
 
@@ -15,19 +15,28 @@ export const useInsertionSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SP
         setCurrentIndex(i)
         await sleep(animationSpeedMs)
 
-        while (j >= 0 && arr[j] > key) {
+        while (j >= 0) {
           if (!isSortingRef.current) return
 
           setComparingIndex(j)
           await sleep(animationSpeedMs)
 
-          arr[j + 1] = arr[j]
-          setNumbers([...arr])
-          j--
+          setComparisons(prev => prev + 1)
+          if (arr[j] > key) {
+            arr[j + 1] = arr[j]
+            setSwaps(prev => prev + 1)
+            setNumbers([...arr])
+            j--
+          } else {
+            break
+          }
         }
 
-        arr[j + 1] = key
-        setNumbers([...arr])
+        if (j + 1 !== i) {
+          arr[j + 1] = key
+          setSwaps(prev => prev + 1)
+          setNumbers([...arr])
+        }
       }
     },
     [isSortingRef, animationSpeedMs],

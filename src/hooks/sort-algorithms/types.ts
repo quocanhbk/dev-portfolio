@@ -1,11 +1,13 @@
-export type SortFunctionArgs = {
+export interface SortFunctionParams {
   numbers: number[]
   setNumbers: (numbers: number[]) => void
   setCurrentIndex: (index: number) => void
   setComparingIndex: (index: number) => void
+  setComparisons: (value: number | ((prev: number) => number)) => void
+  setSwaps: (value: number | ((prev: number) => number)) => void
 }
 
-export type SortFunction = (args: SortFunctionArgs) => Promise<void>
+export type SortFunction = (params: SortFunctionParams) => Promise<void>
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 

@@ -17,6 +17,9 @@ const SortSimulation = () => {
   const [comparingIndex, setComparingIndex] = useState(-1)
   const isSortingRef = useRef(false)
 
+  const [comparisons, setComparisons] = useState(0)
+  const [swaps, setSwaps] = useState(0)
+
   const bubbleSort = useBubbleSort({ isSortingRef, animationSpeedMs: animationSpeed })
   const insertionSort = useInsertionSort({ isSortingRef, animationSpeedMs: animationSpeed })
   const mergeSort = useMergeSort({ isSortingRef, animationSpeedMs: animationSpeed })
@@ -25,20 +28,22 @@ const SortSimulation = () => {
   const handleStart = async () => {
     setIsSorting(true)
     isSortingRef.current = true
+    setComparisons(0)
+    setSwaps(0)
 
     try {
       switch (selectedAlgorithm) {
         case "bubble":
-          await bubbleSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex })
+          await bubbleSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
           break
         case "insertion":
-          await insertionSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex })
+          await insertionSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
           break
         case "merge":
-          await mergeSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex })
+          await mergeSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
           break
         case "quick":
-          await quickSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex })
+          await quickSort({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps })
           break
       }
     } catch (error) {
@@ -56,12 +61,14 @@ const SortSimulation = () => {
     setIsSorting(false)
   }
 
-  const handleReset = () => {
+  const handleReset = (length: number) => {
     isSortingRef.current = false
     setIsSorting(false)
     setCurrentIndex(-1)
     setComparingIndex(-1)
-    generateNewArray(arrayLength)
+    setComparisons(0)
+    setSwaps(0)
+    generateNewArray(length)
   }
 
   const generateNewArray = (length: number) => {
@@ -70,7 +77,17 @@ const SortSimulation = () => {
 
   const handleArrayLengthChange = (value: number) => {
     setArrayLength(value)
-    generateNewArray(value)
+    handleReset(value)
+  }
+
+  const handleAlgorithmChange = (value: SortAlgorithm) => {
+    setSelectedAlgorithm(value)
+    handleReset(arrayLength)
+  }
+
+  const handleAnimationSpeedChange = (value: number) => {
+    setAnimationSpeed(value)
+    handleReset(arrayLength)
   }
 
   return (
@@ -83,15 +100,21 @@ const SortSimulation = () => {
           arrayLength={arrayLength}
           onArrayLengthChange={handleArrayLengthChange}
           selectedAlgorithm={selectedAlgorithm}
-          onAlgorithmChange={setSelectedAlgorithm}
+          onAlgorithmChange={handleAlgorithmChange}
           animationSpeed={animationSpeed}
-          onAnimationSpeedChange={setAnimationSpeed}
+          onAnimationSpeedChange={handleAnimationSpeedChange}
           isSorting={isSorting}
           onStart={handleStart}
           onStop={handleStop}
-          onReset={handleReset}
+          onReset={() => handleReset(arrayLength)}
         />
-        <SortChart numbers={numbers} currentIndex={currentIndex} comparingIndex={comparingIndex} />
+        <SortChart
+          numbers={numbers}
+          currentIndex={currentIndex}
+          comparingIndex={comparingIndex}
+          comparisons={comparisons}
+          swaps={swaps}
+        />
       </div>
     </>
   )

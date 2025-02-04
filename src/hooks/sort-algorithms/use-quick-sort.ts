@@ -11,6 +11,8 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
       setNumbers: (numbers: number[]) => void,
       setCurrentIndex: (index: number) => void,
       setComparingIndex: (index: number) => void,
+      setComparisons: (value: number | ((prev: number) => number)) => void,
+      setSwaps: (value: number | ((prev: number) => number)) => void,
       isSorting: boolean,
     ) => {
       const pivot = arr[high]
@@ -20,18 +22,23 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
         if (!isSorting) return -1
 
         setCurrentIndex(j)
-        setComparingIndex(high) // pivot
+        setComparingIndex(high)
         await sleep(animationSpeedMs)
 
+        setComparisons(prev => prev + 1)
         if (arr[j] < pivot) {
           i++
           ;[arr[i], arr[j]] = [arr[j], arr[i]]
+          setSwaps(prev => prev + 1)
           setNumbers([...arr])
         }
       }
 
-      ;[arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]
-      setNumbers([...arr])
+      if (i + 1 !== high) {
+        ;[arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]
+        setSwaps(prev => prev + 1)
+        setNumbers([...arr])
+      }
       return i + 1
     },
     [animationSpeedMs],
@@ -45,20 +52,52 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
       setNumbers: (numbers: number[]) => void,
       setCurrentIndex: (index: number) => void,
       setComparingIndex: (index: number) => void,
+      setComparisons: (value: number | ((prev: number) => number)) => void,
+      setSwaps: (value: number | ((prev: number) => number)) => void,
       isSorting: boolean,
     ) => {
       if (low < high && isSorting) {
-        const pi = await partition(arr, low, high, setNumbers, setCurrentIndex, setComparingIndex, isSorting)
+        const pi = await partition(
+          arr,
+          low,
+          high,
+          setNumbers,
+          setCurrentIndex,
+          setComparingIndex,
+          setComparisons,
+          setSwaps,
+          isSorting,
+        )
         if (pi === -1) return // sorting was cancelled
-        await quickSortHelper(arr, low, pi - 1, setNumbers, setCurrentIndex, setComparingIndex, isSorting)
-        await quickSortHelper(arr, pi + 1, high, setNumbers, setCurrentIndex, setComparingIndex, isSorting)
+        await quickSortHelper(
+          arr,
+          low,
+          pi - 1,
+          setNumbers,
+          setCurrentIndex,
+          setComparingIndex,
+          setComparisons,
+          setSwaps,
+          isSorting,
+        )
+        await quickSortHelper(
+          arr,
+          pi + 1,
+          high,
+          setNumbers,
+          setCurrentIndex,
+          setComparingIndex,
+          setComparisons,
+          setSwaps,
+          isSorting,
+        )
       }
     },
     [partition],
   )
 
   const quickSort: SortFunction = useCallback(
-    async ({ numbers, setNumbers, setCurrentIndex, setComparingIndex }) => {
+    async ({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps }) => {
       const arr = [...numbers]
       await quickSortHelper(
         arr,
@@ -67,6 +106,8 @@ export const useQuickSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_
         setNumbers,
         setCurrentIndex,
         setComparingIndex,
+        setComparisons,
+        setSwaps,
         isSortingRef.current,
       )
     },

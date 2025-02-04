@@ -9,7 +9,7 @@ export interface SortHookProps {
 
 export const useBubbleSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED_MS }: SortHookProps) => {
   const bubbleSort: SortFunction = useCallback(
-    async ({ numbers, setNumbers, setCurrentIndex, setComparingIndex }) => {
+    async ({ numbers, setNumbers, setCurrentIndex, setComparingIndex, setComparisons, setSwaps }) => {
       const arr = [...numbers]
       const n = arr.length
 
@@ -21,8 +21,10 @@ export const useBubbleSort = ({ isSortingRef, animationSpeedMs = ANIMATION_SPEED
           setComparingIndex(j + 1)
           await sleep(animationSpeedMs)
 
+          setComparisons(prev => prev + 1)
           if (arr[j] > arr[j + 1]) {
             ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+            setSwaps(prev => prev + 1)
             setNumbers([...arr])
           }
         }
