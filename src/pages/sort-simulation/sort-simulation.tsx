@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { bubbleSort, insertionSort, mergeSort, quickSort } from "@/lib/sort-algorithms"
-import { useState } from "react"
+import { useBubbleSort, useInsertionSort, useMergeSort, useQuickSort } from "@/hooks/sort-algorithms"
+import { useRef, useState } from "react"
 import { Helmet } from "react-helmet-async"
 
 type SortAlgorithm = "bubble" | "quick" | "merge" | "insertion"
@@ -16,9 +16,16 @@ const SortSimulation = () => {
   const [isSorting, setIsSorting] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(-1)
   const [comparingIndex, setComparingIndex] = useState(-1)
+  const isSortingRef = useRef(false)
+
+  const bubbleSort = useBubbleSort({ isSortingRef, animationSpeedMs: 10 })
+  const insertionSort = useInsertionSort({ isSortingRef, animationSpeedMs: 10 })
+  const mergeSort = useMergeSort({ isSortingRef, animationSpeedMs: 10 })
+  const quickSort = useQuickSort({ isSortingRef, animationSpeedMs: 10 })
 
   const handleStart = async () => {
     setIsSorting(true)
+    isSortingRef.current = true
 
     try {
       switch (selectedAlgorithm) {
@@ -38,13 +45,20 @@ const SortSimulation = () => {
     } catch (error) {
       console.error(error)
     } finally {
+      isSortingRef.current = false
+      setIsSorting(false)
       setCurrentIndex(-1)
       setComparingIndex(-1)
-      setIsSorting(false)
     }
   }
 
+  const handleStop = () => {
+    isSortingRef.current = false
+    setIsSorting(false)
+  }
+
   const handleReset = () => {
+    isSortingRef.current = false
     setIsSorting(false)
     setCurrentIndex(-1)
     setComparingIndex(-1)
@@ -104,10 +118,8 @@ const SortSimulation = () => {
           </div>
 
           <div className="space-y-3 flex flex-col">
-            <Button onClick={handleStart} disabled={isSorting}>
-              Start
-            </Button>
-            <Button onClick={handleReset} disabled={isSorting} variant={"outline"}>
+            <Button onClick={() => (isSorting ? handleStop() : handleStart())}>{isSorting ? "Stop" : "Start"}</Button>
+            <Button onClick={handleReset} variant={"outline"}>
               Reset
             </Button>
           </div>
