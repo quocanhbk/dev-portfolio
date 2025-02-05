@@ -19,7 +19,7 @@ const SortChart = ({ algorithm, numbers, currentIndex, comparingIndex, compariso
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-neutral-900 overflow-hidden">
+    <div className="flex-1 flex flex-col bg-slate-950 overflow-hidden">
       <SortStats algorithm={algorithm} comparisons={comparisons} swaps={swaps} />
       <div className="flex-1 flex items-end justify-center px-4 overflow-hidden">
         <div className="w-full max-w-4xl h-96 max-h-full flex items-end justify-center gap-[2px]">

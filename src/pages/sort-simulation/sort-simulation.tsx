@@ -29,7 +29,7 @@ const SortSimulation = () => {
       <Helmet>
         <title>Sort Simulation</title>
       </Helmet>
-      <div className="w-full h-screen bg-slate-900 flex">
+      <div className="w-full h-screen bg-slate-950 flex">
         <SortControls
           arrayLength={arrayLength}
           onArrayLengthChange={handleArrayLengthChange}
@@ -44,7 +44,7 @@ const SortSimulation = () => {
           onAddAlgorithm={addAlgorithm}
           onRemoveAlgorithm={removeAlgorithm}
         />
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(32rem,1fr))] gap-px auto-rows-fr bg-neutral-800">
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(32rem,1fr))] gap-px auto-rows-fr bg-slate-800">
           {algorithms.map((algorithm, index) => (
             <SortChart
               key={index}
