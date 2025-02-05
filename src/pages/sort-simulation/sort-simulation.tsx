@@ -56,6 +56,9 @@ const SortSimulation = () => {
               swaps={algorithm.swaps}
             />
           ))}
+          {algorithms.length > 1 && algorithms.length % 2 !== 0 && (
+            <div className="flex-1 flex flex-col bg-slate-950 overflow-hidden"></div>
+          )}
         </div>
       </div>
     </>
