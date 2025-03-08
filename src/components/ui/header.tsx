@@ -13,7 +13,7 @@ const Header = () => {
             <Link
               to={nav.hashes[0]}
               key={nav.hashes[0]}
-              className={cn("px-3 py-1 rounded-md", {
+              className={cn("px-3 py-1", {
                 "bg-white text-slate-900": nav.hashes.includes(location.hash),
                 "hover:bg-white/10": !nav.hashes.includes(location.hash),
               })}
