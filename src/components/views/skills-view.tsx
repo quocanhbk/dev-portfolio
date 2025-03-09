@@ -1,27 +1,91 @@
+import { motion } from "framer-motion"
 import React from "react"
 
-const SkillsView: React.FC = () => {
+// Import skill icons
+import nestjsIcon from "../../assets/nestjs.svg"
+import nextjsIcon from "../../assets/nextjs.svg"
+import nodejsIcon from "../../assets/nodejs.svg"
+import reactjsIcon from "../../assets/reactjs.svg"
+import typescriptIcon from "../../assets/typescript.svg"
+
+interface SkillProps {
+  name: string
+  icon: string
+  index: number
+}
+
+const Skill: React.FC<SkillProps> = ({ name, icon, index }) => {
   return (
-    <div className="h-[100dvh] flex flex-col justify-center items-center p-8" id="skills">
-      <h2 className="text-4xl font-bold mb-8">Skills</h2>
-      <div className="w-full max-w-4xl">
-        {/* TODO: Implement Skills content */}
-        <p className="text-xl text-center mb-8">
-          TODO: Add skill categories and progress bars or skill cards showing proficiency levels.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Skill categories will go here */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-semibold">Frontend</h3>
-            {/* Frontend skills will go here */}
-          </div>
-          <div className="space-y-4">
-            <h3 className="text-2xl font-semibold">Backend</h3>
-            {/* Backend skills will go here */}
-          </div>
+    <motion.div
+      className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center hover:shadow-xl transition-shadow"
+      initial={{ y: 50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+    >
+      <img src={icon} alt={name} className="w-16 h-16 mb-4" />
+      <h3 className="text-lg font-semibold text-slate-800">{name}</h3>
+    </motion.div>
+  )
+}
+
+const SkillsView: React.FC = () => {
+  const skills = [
+    { name: "React.js", icon: reactjsIcon },
+    { name: "Next.js", icon: nextjsIcon },
+    { name: "TypeScript", icon: typescriptIcon },
+    { name: "Node.js", icon: nodejsIcon },
+    { name: "Nest.js", icon: nestjsIcon },
+  ]
+
+  return (
+    <motion.div
+      className="min-h-[100dvh] flex flex-col justify-center items-center p-8 py-20 bg-white text-slate-800"
+      id="skills"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.h2
+        className="text-4xl font-bold mb-12 text-center text-slate-900"
+        initial={{ y: -50 }}
+        animate={{ y: 0 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
+        Skills
+      </motion.h2>
+
+      <motion.div
+        className="w-full max-w-6xl"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+      >
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {skills.map((skill, index) => (
+            <Skill key={skill.name} name={skill.name} icon={skill.icon} index={index} />
+          ))}
         </div>
-      </div>
-    </div>
+
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
+          <p className="text-slate-600 max-w-2xl mx-auto">
+            Experienced in building modern web applications with these technologies, focusing on clean code and
+            efficient solutions.
+          </p>
+          <div className="mt-8">
+            <div className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md">
+              <span className="font-medium">TOEIC: 960</span>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   )
 }
 
