@@ -58,7 +58,7 @@ export const companies = [
   {
     id: "blockpixels",
     name: "Blockpixels",
-    logo: "https://placehold.co/100x100?text=BP",
+    logo: "/images/companies/blockpixels.jpg",
     website: "https://blockpixels.io",
     description: "Blockchain development company specializing in decentralized applications and smart contracts.",
     role: "Fullstack and Blockchain Developer",
@@ -95,7 +95,7 @@ export const companies = [
   {
     id: "ather-labs",
     name: "Ather Labs",
-    logo: "https://placehold.co/100x100?text=AL",
+    logo: "/images/companies/atherlabs.jpg",
     website: "https://atherlabs.io",
     description: "Blockchain innovation lab focused on developing cutting-edge blockchain solutions.",
     role: "Fullstack and Blockchain Developer",
@@ -123,7 +123,7 @@ export const companies = [
   {
     id: "trung-thuy",
     name: "Trung Thuy Group",
-    logo: "https://placehold.co/100x100?text=TTG",
+    logo: "/images/companies/trungthuygroup.jpg",
     website: "https://trungthuycorp.com",
     description: "Real estate development corporation with diverse business interests.",
     role: "Software Developer",
