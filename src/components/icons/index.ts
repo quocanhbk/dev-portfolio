@@ -1,6 +1,7 @@
 export * from "./calendar-icon"
 export * from "./cancel-icon"
 export * from "./code-icon"
+export * from "./external-link-icon"
 export * from "./github-icon"
 export * from "./hamburger-icon"
 export * from "./location-icon"
