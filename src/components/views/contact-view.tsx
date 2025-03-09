@@ -2,8 +2,8 @@ import { motion } from "framer-motion"
 import React, { useState } from "react"
 import { useInView } from "react-intersection-observer"
 import { contactInfo, personalInfo } from "../../constants"
-import { GithubIcon, LinkedinIcon, MailIcon } from "../icons"
-import { AbsoluteBackground, Heading } from "../ui"
+import { GithubIcon, LinkedinIcon, MailIcon, SendIcon } from "../icons"
+import { AbsoluteBackground, Heading, MainButton } from "../ui"
 
 const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -143,30 +143,13 @@ const ContactView: React.FC = () => {
                       Name
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 text-slate-400"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                          />
-                        </svg>
-                      </div>
                       <input
                         type="text"
                         id="name"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        required
-                        className="w-full pl-10 px-4 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800"
+                        className="w-full px-4 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800"
                         placeholder="Your Name"
                       />
                     </div>
@@ -177,22 +160,6 @@ const ContactView: React.FC = () => {
                       Email
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 text-slate-400"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                          />
-                        </svg>
-                      </div>
                       <input
                         type="email"
                         id="email"
@@ -200,7 +167,7 @@ const ContactView: React.FC = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full pl-10 px-4 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800"
+                        className="w-full px-4 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -211,22 +178,6 @@ const ContactView: React.FC = () => {
                       Message
                     </label>
                     <div className="relative">
-                      <div className="absolute top-3 left-3 flex items-start pointer-events-none">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 text-slate-400"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                          />
-                        </svg>
-                      </div>
                       <textarea
                         id="message"
                         name="message"
@@ -234,38 +185,17 @@ const ContactView: React.FC = () => {
                         onChange={handleChange}
                         required
                         rows={5}
-                        className="w-full pl-10 px-4 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800 resize-none"
+                        className="w-full px-4 py-2 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-800 resize-none"
                         placeholder="Your message here..."
                       ></textarea>
                     </div>
                   </div>
 
                   <div className="flex justify-center mt-8">
-                    <motion.button
-                      type="submit"
-                      className="relative px-8 py-3 overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg group"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
-                      <span className="relative flex items-center justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                          />
-                        </svg>
-                        Send Message
-                      </span>
-                    </motion.button>
+                    <MainButton type="submit" className="w-full">
+                      <SendIcon className="size-4" />
+                      Send Message
+                    </MainButton>
                   </div>
                 </form>
               </div>
