@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import React from "react"
+import { personalInfo } from "../../constants"
 
 const AboutMeView: React.FC = () => {
   return (
@@ -30,7 +31,10 @@ const AboutMeView: React.FC = () => {
           <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-blue-500 shadow-xl">
             {/* Replace with your actual image */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-4xl font-bold">
-              LA
+              {personalInfo.name
+                .split(" ")
+                .map(name => name[0])
+                .join("")}
             </div>
           </div>
         </motion.div>
@@ -41,24 +45,21 @@ const AboutMeView: React.FC = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <h3 className="text-3xl font-bold mb-4 text-blue-600">La Quoc Anh</h3>
-          <h4 className="text-xl text-slate-700 mb-6">Fullstack & Blockchain Developer</h4>
+          <h3 className="text-3xl font-bold mb-4 text-blue-600">{personalInfo.name}</h3>
+          <h4 className="text-xl text-slate-700 mb-6">{personalInfo.title}</h4>
 
           <div className="space-y-4 text-slate-600">
-            <p>
-              Passionate developer specializing in fullstack and blockchain technologies with a strong foundation in
-              Computer Science.
-            </p>
+            <p>{personalInfo.bio}</p>
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-4">
             <div>
               <h5 className="font-semibold text-blue-600">Location</h5>
-              <p className="text-slate-700">Ho Chi Minh City</p>
+              <p className="text-slate-700">{personalInfo.location}</p>
             </div>
             <div>
               <h5 className="font-semibold text-blue-600">Email</h5>
-              <p className="text-slate-700">quocanhbk17@gmail.com</p>
+              <p className="text-slate-700">{personalInfo.email}</p>
             </div>
           </div>
         </motion.div>
@@ -71,11 +72,15 @@ const AboutMeView: React.FC = () => {
         transition={{ delay: 0.5, duration: 0.5 }}
       >
         <h3 className="text-2xl font-bold mb-6 text-center text-slate-900">GitHub Contributions</h3>
-        <div className="bg-slate-50 p-4 rounded-lg shadow-lg overflow-hidden">
-          <img src={`https://ghchart.rshah.org/quocanhbk`} alt="GitHub Contribution Chart" className="w-full h-auto" />
+        <div className="bg-slate-50 p-4 rounded-lg overflow-hidden">
+          <img
+            src={`https://ghchart.rshah.org/${personalInfo.github.split("/").pop()}`}
+            alt="GitHub Contribution Chart"
+            className="w-full h-auto"
+          />
           <div className="mt-4 text-center">
             <a
-              href="https://github.com/quocanhbk"
+              href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"

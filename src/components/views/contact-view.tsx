@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import React, { useState } from "react"
+import { contactInfo, personalInfo } from "../../constants"
 
 const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -67,7 +68,7 @@ const ContactView: React.FC = () => {
               </div>
               <div>
                 <h4 className="font-medium text-slate-800">Phone</h4>
-                <p className="text-slate-600">0384415336</p>
+                <p className="text-slate-600">{contactInfo.phone}</p>
               </div>
             </div>
 
@@ -90,7 +91,7 @@ const ContactView: React.FC = () => {
               </div>
               <div>
                 <h4 className="font-medium text-slate-800">Email</h4>
-                <p className="text-slate-600">quocanhbk17@gmail.com</p>
+                <p className="text-slate-600">{contactInfo.email}</p>
               </div>
             </div>
 
@@ -119,7 +120,7 @@ const ContactView: React.FC = () => {
               </div>
               <div>
                 <h4 className="font-medium text-slate-800">Location</h4>
-                <p className="text-slate-600">Ho Chi Minh City</p>
+                <p className="text-slate-600">{contactInfo.location}</p>
               </div>
             </div>
 
@@ -143,12 +144,12 @@ const ContactView: React.FC = () => {
               <div>
                 <h4 className="font-medium text-slate-800">GitHub</h4>
                 <a
-                  href="https://github.com/quocanhbk"
+                  href={contactInfo.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline"
                 >
-                  github.com/quocanhbk
+                  {contactInfo.github.replace("https://", "")}
                 </a>
               </div>
             </div>
@@ -234,7 +235,7 @@ const ContactView: React.FC = () => {
       >
         <div className="flex justify-center space-x-6">
           <a
-            href="https://github.com/quocanhbk"
+            href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-blue-100 p-3 rounded-full hover:bg-blue-600 hover:text-white transition-colors text-blue-600"
@@ -248,7 +249,7 @@ const ContactView: React.FC = () => {
             </svg>
           </a>
           <a
-            href="mailto:quocanhbk17@gmail.com"
+            href={`mailto:${contactInfo.email}`}
             className="bg-blue-100 p-3 rounded-full hover:bg-blue-600 hover:text-white transition-colors text-blue-600"
           >
             <svg
@@ -267,7 +268,7 @@ const ContactView: React.FC = () => {
             </svg>
           </a>
           <a
-            href="tel:0384415336"
+            href={`tel:${contactInfo.phone}`}
             className="bg-blue-100 p-3 rounded-full hover:bg-blue-600 hover:text-white transition-colors text-blue-600"
           >
             <svg

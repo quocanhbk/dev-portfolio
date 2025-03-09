@@ -1,12 +1,8 @@
 import { motion } from "framer-motion"
 import React from "react"
+import { personalInfo, skills } from "../../constants"
 
 // Import skill icons
-import nestjsIcon from "../../assets/nestjs.svg"
-import nextjsIcon from "../../assets/nextjs.svg"
-import nodejsIcon from "../../assets/nodejs.svg"
-import reactjsIcon from "../../assets/reactjs.svg"
-import typescriptIcon from "../../assets/typescript.svg"
 
 interface SkillProps {
   name: string
@@ -30,14 +26,6 @@ const Skill: React.FC<SkillProps> = ({ name, icon, index }) => {
 }
 
 const SkillsView: React.FC = () => {
-  const skills = [
-    { name: "React.js", icon: reactjsIcon },
-    { name: "Next.js", icon: nextjsIcon },
-    { name: "TypeScript", icon: typescriptIcon },
-    { name: "Node.js", icon: nodejsIcon },
-    { name: "Nest.js", icon: nestjsIcon },
-  ]
-
   return (
     <motion.div
       className="min-h-[100dvh] flex flex-col justify-center items-center p-8 py-20 bg-white text-slate-800"
@@ -78,11 +66,17 @@ const SkillsView: React.FC = () => {
             Experienced in building modern web applications with these technologies, focusing on clean code and
             efficient solutions.
           </p>
-          <div className="mt-8">
-            <div className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md">
-              <span className="font-medium">TOEIC: 960</span>
+          {personalInfo.certifications.length > 0 && (
+            <div className="mt-8">
+              {personalInfo.certifications.map((cert, index) => (
+                <div key={index} className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md">
+                  <span className="font-medium">
+                    {cert.name}: {cert.score}
+                  </span>
+                </div>
+              ))}
             </div>
-          </div>
+          )}
         </motion.div>
       </motion.div>
     </motion.div>

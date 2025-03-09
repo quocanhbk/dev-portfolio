@@ -1,122 +1,144 @@
 import { motion } from "framer-motion"
 import React from "react"
+import { companies } from "../../constants"
 
-interface ProjectProps {
-  title: string
-  company: string
-  period: string
+// Company interface
+interface CompanyProps {
+  id: string
+  name: string
+  logo: string
+  website: string
   description: string
-  technologies: string[]
-  index: number
+  role: string
+  period: string
+  projects: ProjectProps[]
 }
 
-const Project: React.FC<ProjectProps> = ({ title, company, period, description, technologies, index }) => {
+// Project interface
+interface ProjectProps {
+  id: string
+  name: string
+  image: string
+  description: string
+  role: string
+  technologies: string[]
+}
+
+// Company component
+const Company: React.FC<{ company: CompanyProps; index: number }> = ({ company, index }) => {
   return (
     <motion.div
-      className="bg-white rounded-lg overflow-hidden shadow-lg"
-      initial={{ y: 50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      className="w-full flex flex-col md:flex-row gap-12 mb-32 last:mb-12"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
     >
-      <div className="p-6">
-        <h3 className="text-xl font-bold mb-2 text-blue-600">{title}</h3>
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-slate-700 font-medium">{company}</span>
-          <span className="text-slate-500 text-sm">{period}</span>
+      {/* Company info - on the left */}
+      <div className="md:w-1/3 md:sticky md:top-24 md:self-start">
+        <div className="flex items-center mb-6">
+          <img src={company.logo} alt={company.name} className="w-16 h-16 rounded-lg mr-4" />
+          <div>
+            <h3 className="text-xl font-bold text-blue-600">{company.name}</h3>
+            <a
+              href={company.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-blue-500 hover:underline"
+            >
+              {company.website.replace(/(^\w+:|^)\/\//, "")}
+            </a>
+          </div>
         </div>
-        <p className="text-slate-600 mb-4">{description}</p>
-        <div className="flex flex-wrap gap-2 mt-4">
-          {technologies.map(tech => (
-            <span key={tech} className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-medium">
-              {tech}
-            </span>
-          ))}
+
+        <p className="text-slate-600 mb-6">{company.description}</p>
+
+        <div className="mb-4">
+          <h4 className="font-semibold text-slate-800">My Role</h4>
+          <p className="text-slate-600">{company.role}</p>
         </div>
+
+        <div>
+          <h4 className="font-semibold text-slate-800">Period</h4>
+          <p className="text-slate-600">{company.period}</p>
+        </div>
+      </div>
+
+      {/* Projects - displayed vertically */}
+      <div className="md:w-2/3 space-y-16">
+        {company.projects.map((project, idx) => (
+          <motion.div
+            key={project.id}
+            className="group"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 + idx * 0.1, duration: 0.4 }}
+          >
+            <div className="relative h-64 overflow-hidden mb-6 bg-slate-100">
+              <img
+                src={project.image}
+                alt={project.name}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                <h4 className="text-white font-bold text-xl p-6">{project.name}</h4>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-slate-600 mb-4">{project.description}</p>
+
+              <div className="mb-4">
+                <h5 className="font-semibold text-slate-800 text-sm">My Contribution</h5>
+                <p className="text-slate-600">{project.role}</p>
+              </div>
+
+              <div className="flex flex-wrap gap-2 mt-4">
+                {project.technologies.map(tech => (
+                  <span key={tech} className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-medium">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </motion.div>
   )
 }
 
 const ProjectsView: React.FC = () => {
-  const projects = [
-    {
-      title: "Decentralized Web Applications",
-      company: "Blockpixels",
-      period: "06/2023 - Current",
-      description: "Building multi-chain dApps with Next.js and developing smart contracts on EVM chains.",
-      technologies: ["Next.js", "Nest.js", "Solidity", "GraphQL"],
-    },
-    {
-      title: "Fullstack Blockchain Applications",
-      company: "Ather Labs",
-      period: "09/2021 - 05/2023",
-      description: "Designed and developed fullstack applications with Next.js and smart contracts.",
-      technologies: ["Next.js", "React.js", "Solidity", "TypeScript"],
-    },
-    {
-      title: "Internal Business Applications",
-      company: "Trung Thuy Group",
-      period: "03/2020 - 09/2021",
-      description: "Developed internal applications using React.js and Node.js with PostgreSQL.",
-      technologies: ["React.js", "Node.js", "PostgreSQL"],
-    },
-  ]
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  }
-
-  const item = {
-    hidden: { y: 20, opacity: 0 },
-    show: { y: 0, opacity: 1 },
-  }
-
   return (
     <motion.div
-      className="min-h-[100dvh] flex flex-col justify-center items-center p-8 py-20 bg-slate-50 text-slate-800"
+      className="min-h-[100dvh] py-20 bg-white text-slate-800"
       id="projects"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <motion.h2
-        className="text-4xl font-bold mb-12 text-center text-slate-900"
-        initial={{ y: -50 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-      >
-        Projects
-      </motion.h2>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2
+          className="text-4xl font-bold mb-20 text-center text-slate-900"
+          initial={{ y: -50 }}
+          animate={{ y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          Work Experience
+        </motion.h2>
 
-      <motion.div className="w-full max-w-6xl" variants={container} initial="hidden" animate="show">
-        <motion.p className="text-xl text-center mb-12 text-gray-300" variants={item}>
-          Here are some of the key projects I've worked on throughout my career.
-        </motion.p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <Project
-              key={index}
-              title={project.title}
-              company={project.company}
-              period={project.period}
-              description={project.description}
-              technologies={project.technologies}
-              index={index}
-            />
+        <div className="space-y-32">
+          {companies.map((company, index) => (
+            <Company key={company.id} company={company} index={index} />
           ))}
         </div>
 
-        <motion.div className="mt-16 text-center" variants={item}>
+        <motion.div
+          className="mt-20 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
           <a
             href="https://github.com/quocanhbk"
             target="_blank"
@@ -133,7 +155,7 @@ const ProjectsView: React.FC = () => {
             View More Projects on GitHub
           </a>
         </motion.div>
-      </motion.div>
+      </div>
     </motion.div>
   )
 }
