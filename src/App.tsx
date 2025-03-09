@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { Helmet } from "react-helmet-async"
 import { Route, Routes } from "react-router-dom"
+import { Footer } from "./components/ui"
 import Header from "./components/ui/header"
 import AboutMeView from "./components/views/about-me-view"
 import ContactView from "./components/views/contact-view"
@@ -41,7 +42,6 @@ const App = () => {
 
   return (
     <>
-      <Header />
       <Routes>
         <Route
           path="/"
@@ -50,11 +50,13 @@ const App = () => {
               <Helmet>
                 <title>quocanhbk17</title>
               </Helmet>
+              <Header />
               <HomeView />
               <AboutMeView />
               <ProjectsView />
               <SkillsView />
               <ContactView />
+              <Footer />
             </main>
           }
         />

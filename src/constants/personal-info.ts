@@ -164,3 +164,5 @@ export const contactInfo = {
   linkedin: "https://www.linkedin.com/in/quocanhbk17",
   message: "Feel free to reach out if you're looking for a developer, have a question, or just want to connect.",
 }
+
+export const portfolioRepository = "https://github.com/quocanhbk/dev-portfolio"

@@ -2,7 +2,7 @@ import { motion } from "framer-motion"
 import React, { useState } from "react"
 import { useInView } from "react-intersection-observer"
 import { contactInfo } from "../../constants"
-import { GithubIcon, LinkedinIcon, MailIcon, SendIcon } from "../icons"
+import { CodeIcon, LinkedinIcon, MailIcon, SendIcon } from "../icons"
 import { AbsoluteBackground, Heading, MainButton } from "../ui"
 
 const ContactView: React.FC = () => {
@@ -86,7 +86,7 @@ const ContactView: React.FC = () => {
                   </div>
                   <div className="flex items-start space-x-6 group">
                     <div className="bg-blue-50 p-3 rounded-full transition-all duration-300 group-hover:bg-blue-100">
-                      <GithubIcon className="size-6 text-blue-600" />
+                      <CodeIcon className="size-6 text-blue-600" />
                     </div>
                     <div>
                       <h4 className="font-medium text-slate-800 mb-1 group-hover:text-blue-600 transition-colors">
