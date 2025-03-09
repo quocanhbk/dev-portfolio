@@ -15,9 +15,8 @@ export const personalInfo = {
   birthDate: "01/06/1999",
   bio: "Passionate developer specializing in fullstack and blockchain technologies with a strong foundation in Computer Science.",
   education: {
-    university: "Ho Chi Minh University of Technology",
+    university: "Bach Khoa University",
     major: "Computer Science",
-    period: "08/2017 - 04/2022",
   },
   certifications: [
     {
