@@ -7,7 +7,7 @@ const Header = () => {
   const activeSection = useActiveSection()
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-10 bg-slate-900/90 backdrop-blur-sm text-slate-100">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-sm text-slate-100">
       <div className="flex justify-end items-center py-4 px-8">
         <div className="flex gap-4">
           {NAV_LINKS.map(nav => (
