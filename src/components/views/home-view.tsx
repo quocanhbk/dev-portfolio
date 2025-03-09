@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer"
 import { Link } from "react-router-dom"
 import { TypeAnimation } from "react-type-animation"
 import { personalInfo } from "../../constants"
-import { GithubIcon, MailIcon, WorkIcon } from "../icons"
+import { MailIcon, WorkIcon } from "../icons"
 import { AbsoluteBackground, MainButton, SecondaryButton } from "../ui"
 
 const HomeView = () => {
@@ -103,30 +103,6 @@ const HomeView = () => {
               </SecondaryButton>
             </Link>
           </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="absolute bottom-8 left-0 right-0 flex justify-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-        >
-          <div className="flex space-x-6">
-            <a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group p-3 bg-white rounded-full shadow-lg hover:shadow-blue-500/20 hover:shadow-xl transition-all duration-300 text-slate-700 hover:text-blue-600"
-            >
-              <GithubIcon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
-            </a>
-            <a
-              href={`mailto:${personalInfo.email}`}
-              className="group p-3 bg-white rounded-full shadow-lg hover:shadow-blue-500/20 hover:shadow-xl transition-all duration-300 text-slate-700 hover:text-blue-600"
-            >
-              <MailIcon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
-            </a>
-          </div>
         </motion.div>
       </motion.div>
     </div>
