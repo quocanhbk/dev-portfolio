@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import React, { useState } from "react"
 import { useInView } from "react-intersection-observer"
 import { contactInfo, personalInfo } from "../../constants"
+import { GithubIcon, LinkedinIcon, MailIcon } from "../icons"
 import { AbsoluteBackground, Heading } from "../ui"
 
 const ContactView: React.FC = () => {
@@ -69,50 +70,7 @@ const ContactView: React.FC = () => {
                 <div className="space-y-8">
                   <div className="flex items-start space-x-6 group">
                     <div className="bg-blue-50 p-3 rounded-full transition-all duration-300 group-hover:bg-blue-100">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-blue-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-slate-800 mb-1 group-hover:text-blue-600 transition-colors">
-                        Phone
-                      </h4>
-                      <a
-                        href={`tel:${contactInfo.phone}`}
-                        className="text-slate-600 hover:text-blue-600 transition-colors"
-                      >
-                        {contactInfo.phone}
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-6 group">
-                    <div className="bg-blue-50 p-3 rounded-full transition-all duration-300 group-hover:bg-blue-100">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-blue-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
+                      <MailIcon className="size-6 text-blue-600" />
                     </div>
                     <div>
                       <h4 className="font-medium text-slate-800 mb-1 group-hover:text-blue-600 transition-colors">
@@ -126,54 +84,9 @@ const ContactView: React.FC = () => {
                       </a>
                     </div>
                   </div>
-
                   <div className="flex items-start space-x-6 group">
                     <div className="bg-blue-50 p-3 rounded-full transition-all duration-300 group-hover:bg-blue-100">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-blue-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-slate-800 mb-1 group-hover:text-blue-600 transition-colors">
-                        Location
-                      </h4>
-                      <p className="text-slate-600">{contactInfo.location}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-6 group">
-                    <div className="bg-blue-50 p-3 rounded-full transition-all duration-300 group-hover:bg-blue-100">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-blue-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                        />
-                      </svg>
+                      <GithubIcon className="size-6 text-blue-600" />
                     </div>
                     <div>
                       <h4 className="font-medium text-slate-800 mb-1 group-hover:text-blue-600 transition-colors">
@@ -186,6 +99,24 @@ const ContactView: React.FC = () => {
                         className="text-slate-600 hover:text-blue-600 transition-colors"
                       >
                         {contactInfo.github.replace("https://", "")}
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-6 group">
+                    <div className="bg-blue-50 p-3 rounded-full transition-all duration-300 group-hover:bg-blue-100">
+                      <LinkedinIcon className="size-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-slate-800 mb-1 group-hover:text-blue-600 transition-colors">
+                        LinkedIn
+                      </h4>
+                      <a
+                        href={contactInfo.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-600 hover:text-blue-600 transition-colors"
+                      >
+                        {contactInfo.linkedin.replace("https://", "")}
                       </a>
                     </div>
                   </div>
@@ -381,25 +312,6 @@ const ContactView: React.FC = () => {
                     strokeLinejoin="round"
                     strokeWidth={2}
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-              </div>
-            </a>
-            <a href={`tel:${contactInfo.phone}`} className="group relative">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-25 group-hover:opacity-100 transition duration-500"></div>
-              <div className="relative p-4 bg-white rounded-full shadow-lg group-hover:shadow-blue-500/30 transition-all duration-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 text-slate-700 group-hover:text-blue-600 transition-colors duration-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
               </div>

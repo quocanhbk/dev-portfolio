@@ -160,8 +160,7 @@ export const companies = [
 // Contact Information
 export const contactInfo = {
   email: "quocanhbk17@gmail.com",
-  phone: "0384415336",
-  location: "Ho Chi Minh City",
   github: "https://github.com/quocanhbk",
+  linkedin: "https://www.linkedin.com/in/quocanhbk17",
   message: "Feel free to reach out if you're looking for a developer, have a question, or just want to connect.",
 }
