@@ -1,0 +1,6 @@
+export * from "./CalendarIcon"
+export * from "./CodeIcon"
+export * from "./GithubIcon"
+export * from "./LocationIcon"
+export * from "./MailIcon"
+export * from "./WorkIcon"
