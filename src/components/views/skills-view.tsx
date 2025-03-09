@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import React from "react"
 import { useInView } from "react-intersection-observer"
 import { personalInfo, skills } from "../../constants"
+import { Heading, SubHeading } from "../ui/heading"
 
 // Import skill icons
 
@@ -74,17 +75,9 @@ const SkillsView: React.FC = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.h2
-          className="text-4xl font-bold mb-16 text-center text-slate-900 relative"
-          initial={{ y: -50 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          <span className="relative inline-block">
-            Skills
-            <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></span>
-          </span>
-        </motion.h2>
+        <Heading initial={{ y: -50 }} animate={{ y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+          Skills
+        </Heading>
 
         <motion.div
           ref={sectionRef}
@@ -116,10 +109,7 @@ const SkillsView: React.FC = () => {
             animate={certInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ delay: 0.6, duration: 0.7 }}
           >
-            <h3 className="text-2xl font-bold mb-8 text-slate-900 relative inline-block">
-              Certifications
-              <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></span>
-            </h3>
+            <SubHeading>Certifications</SubHeading>
 
             <div className="flex justify-center mt-10">
               {personalInfo.certifications.map((cert, index) => (

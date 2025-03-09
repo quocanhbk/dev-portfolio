@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import React from "react"
 import { useInView } from "react-intersection-observer"
 import { companies } from "../../constants"
+import { Heading } from "../ui/heading"
 
 // Company interface
 interface CompanyProps {
@@ -223,23 +224,20 @@ const ProjectsView: React.FC = () => {
       </div>
 
       <motion.div
-        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8"
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 "
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.h2
-          className="text-4xl font-bold mb-16 text-center text-slate-900 relative inline-block"
+        <Heading
+          className="text-left"
           initial={{ y: -50 }}
           animate={{ y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <span className="relative inline-block">
-            Work Experience
-            <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></span>
-          </span>
-        </motion.h2>
+          Work Experience
+        </Heading>
 
         <div className="space-y-32">
           {companies.map((company, index) => (

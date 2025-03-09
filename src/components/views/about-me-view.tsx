@@ -1,10 +1,10 @@
 import { motion } from "framer-motion"
-import React from "react"
 import { useInView } from "react-intersection-observer"
-import { personalInfo } from "../../constants"
+import { personalInfo, workingStyles } from "../../constants"
 import { LocationIcon, MailIcon, UniversityIcon } from "../icons"
+import { Heading, SubHeading } from "../ui/heading"
 
-const AboutMeView: React.FC = () => {
+const AboutMeView = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -47,17 +47,9 @@ const AboutMeView: React.FC = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.h2
-          className="text-4xl font-bold mb-16 text-center text-slate-900 relative"
-          initial={{ y: -50 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          <span className="relative inline-block">
-            About Me
-            <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></span>
-          </span>
-        </motion.h2>
+        <Heading initial={{ y: -50 }} animate={{ y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+          About Me
+        </Heading>
 
         <motion.div
           ref={ref}
@@ -122,18 +114,12 @@ const AboutMeView: React.FC = () => {
                 <p className="text-lg leading-relaxed">{personalInfo.bio}</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-blue-600 mb-2">Embracing Simplicity</h4>
-                    <p className="text-slate-600 text-sm">Develop simple, efficient solutions for complex problems</p>
-                  </div>
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-blue-600 mb-2">Prioritizing Cleanliness</h4>
-                    <p className="text-slate-600 text-sm">Maintain clean and well-organized code</p>
-                  </div>
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-blue-600 mb-2">Commitment to Learning</h4>
-                    <p className="text-slate-600 text-sm">Continuously expand knowledge in technologies</p>
-                  </div>
+                  {workingStyles.map((style, index) => (
+                    <div key={index} className="bg-blue-50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-blue-600 mb-2">{style.name}</h4>
+                      <p className="text-slate-600 text-sm">{style.description}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -146,10 +132,7 @@ const AboutMeView: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.7 }}
         >
-          <h3 className="text-2xl font-bold mb-8 text-center text-slate-900 relative inline-block">
-            GitHub Contributions
-            <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></span>
-          </h3>
+          <SubHeading>GitHub Contributions</SubHeading>
 
           <div className="bg-white rounded-xl p-6 shadow-xl hover:shadow-blue-500/10 transition-shadow overflow-hidden">
             <div className="relative">

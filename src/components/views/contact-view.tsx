@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import React, { useState } from "react"
 import { useInView } from "react-intersection-observer"
 import { contactInfo, personalInfo } from "../../constants"
+import { Heading } from "../ui/heading"
 
 const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -54,17 +55,9 @@ const ContactView: React.FC = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.h2
-          className="text-4xl font-bold mb-16 text-center text-slate-900 relative"
-          initial={{ y: -50 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          <span className="relative inline-block">
-            Contact Me
-            <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"></span>
-          </span>
-        </motion.h2>
+        <Heading initial={{ y: -50 }} animate={{ y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+          Contact Me
+        </Heading>
 
         <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12">
           <motion.div

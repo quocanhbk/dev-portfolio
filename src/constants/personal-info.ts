@@ -28,6 +28,22 @@ export const personalInfo = {
   ],
 }
 
+// Working style
+export const workingStyles = [
+  {
+    name: "Embracing Simplicity",
+    description: "Develop simple, efficient solutions for complex problems",
+  },
+  {
+    name: "Prioritizing Cleanliness",
+    description: "Maintain clean and well-organized code",
+  },
+  {
+    name: "Commitment to Learning",
+    description: "Continuously expand knowledge in technologies",
+  },
+]
+
 // Skills
 export const skills = [
   { name: "React.js", icon: reactjsIcon },
