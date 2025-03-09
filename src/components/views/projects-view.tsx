@@ -96,7 +96,7 @@ const Company: React.FC<{ company: CompanyProps; index: number }> = ({ company, 
       transition={{ duration: 0.8 }}
     >
       <motion.div
-        className="flex flex-col md:flex-row gap-12 mb-24 last:mb-0 relative"
+        className="relative"
         initial={{ y: 100 }}
         animate={inView ? { y: 0 } : { y: 100 }}
         transition={{
@@ -105,98 +105,102 @@ const Company: React.FC<{ company: CompanyProps; index: number }> = ({ company, 
           ease: [0.43, 0.13, 0.23, 0.96],
         }}
       >
-        {/* Company info - on the left */}
-        <div className="md:w-1/3 md:sticky md:top-24 md:self-start">
-          <div className="relative h-fit">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur opacity-25"></div>
-            <div className="relative bg-white p-6 rounded-xl shadow-lg">
-              <div className="flex items-center mb-6">
-                <div className="w-16 h-16 rounded-lg overflow-hidden mr-4 bg-blue-50 flex items-center justify-center">
-                  <img src={company.logo} alt={company.name} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-                    {company.name}
-                  </h3>
-                  <a
-                    href={company.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-blue-500 hover:underline flex items-center"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-3 w-3 mr-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                    {company.website.replace(/(^\w+:|^)\/\//, "")}
-                  </a>
-                </div>
-              </div>
+        <div className="flex flex-col md:flex-row gap-12 mb-24 last:mb-0">
+          {/* Company info - on the left */}
+          <div className="md:w-1/3 relative">
+            <div className="sticky top-24">
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl blur opacity-25"></div>
+                <div className="relative bg-white p-6 rounded-xl shadow-lg">
+                  <div className="flex items-center mb-6">
+                    <div className="w-16 h-16 rounded-lg overflow-hidden mr-4 bg-blue-50 flex items-center justify-center">
+                      <img src={company.logo} alt={company.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                        {company.name}
+                      </h3>
+                      <a
+                        href={company.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-500 hover:underline flex items-center"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-3 w-3 mr-1"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                        {company.website.replace(/(^\w+:|^)\/\//, "")}
+                      </a>
+                    </div>
+                  </div>
 
-              <p className="text-slate-600 mb-6">{company.description}</p>
+                  <p className="text-slate-600 mb-6">{company.description}</p>
 
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-slate-800 flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2 text-blue-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                    My Role
-                  </h4>
-                  <p className="text-slate-600 ml-6">{company.role}</p>
-                </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-slate-800 flex items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 mr-2 text-blue-500"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                          />
+                        </svg>
+                        My Role
+                      </h4>
+                      <p className="text-slate-600 ml-6">{company.role}</p>
+                    </div>
 
-                <div>
-                  <h4 className="font-semibold text-slate-800 flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2 text-blue-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      />
-                    </svg>
-                    Period
-                  </h4>
-                  <p className="text-slate-600 ml-6">{company.period}</p>
+                    <div>
+                      <h4 className="font-semibold text-slate-800 flex items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 mr-2 text-blue-500"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          />
+                        </svg>
+                        Period
+                      </h4>
+                      <p className="text-slate-600 ml-6">{company.period}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Projects - displayed vertically */}
-        <div className="md:w-2/3 space-y-16">
-          {company.projects.map((project, idx) => (
-            <Project key={project.id} project={project} index={idx} />
-          ))}
+          {/* Projects - displayed vertically */}
+          <div className="md:w-2/3 space-y-16">
+            {company.projects.map((project, idx) => (
+              <Project key={project.id} project={project} index={idx} />
+            ))}
+          </div>
         </div>
       </motion.div>
     </motion.div>
@@ -205,7 +209,10 @@ const Company: React.FC<{ company: CompanyProps; index: number }> = ({ company, 
 
 const ProjectsView: React.FC = () => {
   return (
-    <div className="relative min-h-[100dvh] py-20 bg-gradient-to-br from-white via-blue-50 to-white overflow-hidden">
+    <div
+      id="projects"
+      className="relative min-h-dvh py-20 bg-gradient-to-br from-white via-blue-50 to-white overflow-hidden"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 -right-20 w-96 h-96 rounded-full bg-blue-100 blur-3xl opacity-50"></div>

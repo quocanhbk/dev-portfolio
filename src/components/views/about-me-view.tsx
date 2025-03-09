@@ -26,7 +26,10 @@ const AboutMeView: React.FC = () => {
   }
 
   return (
-    <div className="relative min-h-[100dvh] py-20 bg-gradient-to-br from-white via-blue-50 to-white overflow-hidden">
+    <div
+      id="about-me"
+      className="relative min-h-dvh py-20 bg-gradient-to-br from-white via-blue-50 to-white overflow-hidden"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 -right-20 w-96 h-96 rounded-full bg-blue-100 blur-3xl opacity-50"></div>
