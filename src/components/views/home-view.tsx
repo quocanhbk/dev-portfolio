@@ -4,8 +4,7 @@ import { Link } from "react-router-dom"
 import { TypeAnimation } from "react-type-animation"
 import { personalInfo } from "../../constants"
 import { GithubIcon, MailIcon, WorkIcon } from "../icons"
-import MainButton from "../ui/main-button"
-import SecondaryButton from "../ui/secondary-button"
+import { AbsoluteBackground, MainButton, SecondaryButton } from "../ui"
 
 const HomeView = () => {
   const [ref, inView] = useInView({
@@ -35,12 +34,7 @@ const HomeView = () => {
       id="home"
       className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-br from-white via-blue-50 to-white"
     >
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-blue-100 blur-3xl opacity-50"></div>
-        <div className="absolute top-1/3 -left-20 w-72 h-72 rounded-full bg-blue-200 blur-3xl opacity-40"></div>
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-blue-100 blur-3xl opacity-30"></div>
-      </div>
+      <AbsoluteBackground />
 
       <motion.div
         className="relative z-10 flex flex-col justify-center items-center min-h-[100dvh] p-8"

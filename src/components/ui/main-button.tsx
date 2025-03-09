@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-const MainButton = ({ children, className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const MainButton = ({ children, className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
       className={cn(
@@ -14,5 +14,3 @@ const MainButton = ({ children, className, ...props }: React.ButtonHTMLAttribute
     </button>
   )
 }
-
-export default MainButton

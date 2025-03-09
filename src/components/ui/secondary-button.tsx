@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-const SecondaryButton = ({ children, className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const SecondaryButton = ({ children, className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
       className={cn(
@@ -14,5 +14,3 @@ const SecondaryButton = ({ children, className, ...props }: React.ButtonHTMLAttr
     </button>
   )
 }
-
-export default SecondaryButton
